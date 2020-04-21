@@ -14,7 +14,7 @@ public class Tetris extends Canvas {
     public Tetris() {
         JFrame container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
-        panel.setPreferredSize(new Dimension(800, 600));
+        panel.setPreferredSize(new Dimension(220, 600));
         panel.setLayout(null);
 
         setBounds(0, 0, 800, 600);
@@ -61,7 +61,7 @@ public class Tetris extends Canvas {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 800, 600);
         g.setColor(Color.GRAY);
-        g.drawRect(300 - 1, 50 - 1, 10 * 20 + 2, 20 * 20 + 2);
+        g.drawRect(10 - 1, 10 - 1, 10 * 20 + 2, 20 * 20 + 2);
     }
 
     public static void main(String[] args) {
