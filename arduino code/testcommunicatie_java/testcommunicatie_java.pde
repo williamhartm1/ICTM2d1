@@ -10,7 +10,7 @@ String KeyString = "";
 void setup() {
   System.out.println("Hi");
   size(700, 500);
-  MyPort = new Serial(this, "COM3", 9600);// My Arduino is on COM3. Enter the COM on which your Arduino is on.
+  MyPort = new Serial(this, "/dev/cu.usbmodem14201", 9600);// My Arduino is on COM3. Enter the COM on which your Arduino is on.
   MyPort.bufferUntil('\n');
 }
 
@@ -34,8 +34,18 @@ void serialEvent(Serial MyPort)throws Exception {
        break;
      case "Right" :
        Arduino.keyPress(KeyEvent.VK_RIGHT);
-       Arduino.keyRelease(KeyEvent.VK_RIGHT);  
-       System.out.println("Go right");    
+       Arduino.keyRelease(KeyEvent.VK_RIGHT);
+       System.out.println("Go right");
+       break;
+     case "Rotate to left" :
+       Arduino.keyPress(KeyEvent.VK_A);
+       Arduino.keyRelease(KeyEvent.VK_A);
+       System.out.println("Draaien naar links");  
+       break;
+     case "Rotate to right" :
+       Arduino.keyPress(KeyEvent.VK_D);
+       Arduino.keyRelease(KeyEvent.VK_D);
+       System.out.println("Draaien naar rechts"); 
        break;
    }
 }
