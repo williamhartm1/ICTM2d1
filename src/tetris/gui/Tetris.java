@@ -39,6 +39,7 @@ public class Tetris extends Canvas implements MouseListener {
         new Tetris().gameLoop();
     }
 
+    // gameLoop blijft status game checken
     void gameLoop() {
         while (true) {
             if(game.isPlaying()) {
@@ -49,9 +50,7 @@ public class Tetris extends Canvas implements MouseListener {
     }
 
     void tetrisLoop() {
-        while (game.isPlaying()) {
-            draw();
-        }
+        // TODO: rotate, left, right, drop
     }
 
     private Graphics2D getGameGraphics() {
