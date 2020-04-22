@@ -12,4 +12,8 @@ public class Game {
     public boolean isPlaying() {
         return playing;
     }
+
+    public void startGame() {
+        this.playing = true;
+    }
 }
