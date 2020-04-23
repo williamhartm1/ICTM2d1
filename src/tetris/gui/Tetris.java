@@ -1,5 +1,7 @@
 package tetris.gui;
 
+import tetris.game.BlockType;
+import tetris.game.BoardCell;
 import tetris.game.Game;
 
 import javax.swing.*;
@@ -12,6 +14,13 @@ public class Tetris extends Canvas implements MouseListener {
     private Game game = new Game();
     // zorgt voor memory management van het canvas
     private final BufferStrategy strategy;
+
+    private final int CORNER = 5;
+
+    private static final int BLOCK_WIDTH = 20;
+
+    private long lastIteration = System.currentTimeMillis();
+
 
     public Tetris() {
         JFrame container = new JFrame("Tetris");
@@ -45,12 +54,22 @@ public class Tetris extends Canvas implements MouseListener {
             if(game.isPlaying()) {
                 tetrisLoop();
             }
+            // slow down game loop
+            try {
+                Thread.sleep(20);
+            } catch (Exception e) { }
             draw();
         }
     }
 
     void tetrisLoop() {
         // TODO: rotate, left, right, drop
+        if (game.isDropping()) {
+            game.moveDown();
+        } else if(System.currentTimeMillis() - lastIteration >= game.getIterationDelay()) {
+            game.moveDown();
+            lastIteration = System.currentTimeMillis();
+        }
     }
 
     private Graphics2D getGameGraphics() {
@@ -60,12 +79,50 @@ public class Tetris extends Canvas implements MouseListener {
     public void draw() {
         Graphics2D g = getGameGraphics();
         drawInitialBoard(g);
+
         if(!game.isPlaying()) {
             drawStartGameButton(g);
         }
 
+        if(game.isPlaying()) {
+            drawCells(g);
+        }
+
         g.dispose();
         strategy.show();
+    }
+
+    private void drawCells(Graphics2D g) {
+        BoardCell[][] cells = game.getBoardCells();
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 20; j++) {
+                drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBoardCellColor(cells[i][j]));
+            }
+        }
+    }
+
+    private Color getBoardCellColor(BoardCell boardCell) {
+        if (boardCell.isEmpty()) {
+            return Color.BLACK;
+        }
+        return getBlockColor(boardCell.getBlockType());
+    }
+
+    private Color getBlockColor(BlockType blockType) {
+        switch (blockType) {
+            case I:
+                return Color.RED;
+            case J:
+                return Color.GRAY;
+            case L:
+                return Color.CYAN;
+            case O:
+                return Color.BLUE;
+            case S:
+                return Color.GREEN;
+            default:
+                return Color.MAGENTA;
+        }
     }
 
     private void drawStartGameButton(Graphics2D g) {
@@ -80,6 +137,12 @@ public class Tetris extends Canvas implements MouseListener {
         g.fillRect(0, 0, 800, 600);
         g.setColor(Color.GRAY);
         g.drawRect(10 - 1, 10 - 1, 10 * 20 + 2, 20 * 20 + 2);
+    }
+
+    private void drawBlock(Graphics g, int x, int y, Color color) {
+        g.setColor(color);
+        g.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
+        g.drawRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
     }
 
     @Override

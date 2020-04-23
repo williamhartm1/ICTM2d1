@@ -107,4 +107,22 @@ public class MysqlCon {
             }
         }
     }
+    public static void excecuteStatement(String statement){
+        Connection con = maakconnectie();
+        try {
+            Statement stmt = con.createStatement();
+            try{
+                stmt.execute(statement);
+            }
+            catch(java.sql.SQLException jex){
+                System.out.println(jex.toString());
+                jex.printStackTrace();
+                System.out.println("er is iets mis me de query");
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+    }
 }
