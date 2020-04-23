@@ -3,12 +3,15 @@ package tetris.gui;
 import tetris.game.BlockType;
 import tetris.game.BoardCell;
 import tetris.game.Game;
+import tetris.game.SpriteSheetLoader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Tetris extends Canvas implements MouseListener {
     private Game game = new Game();
@@ -21,12 +24,16 @@ public class Tetris extends Canvas implements MouseListener {
 
     private long lastIteration = System.currentTimeMillis();
 
+    private SpriteSheetLoader sprites;
 
-    public Tetris() {
+
+    public Tetris() throws IOException {
         JFrame container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
         panel.setPreferredSize(new Dimension(220, 600));
         panel.setLayout(null);
+
+        sprites = new SpriteSheetLoader(20, 20,  6);
 
         setBounds(0, 0, 800, 600);
         panel.add(this);
@@ -44,7 +51,7 @@ public class Tetris extends Canvas implements MouseListener {
         strategy = getBufferStrategy();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new Tetris().gameLoop();
     }
 
@@ -96,32 +103,31 @@ public class Tetris extends Canvas implements MouseListener {
         BoardCell[][] cells = game.getBoardCells();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 20; j++) {
-                drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBoardCellColor(cells[i][j]));
+                 BoardCell cell = cells[i][j];
+
+                if(cell.isEmpty()) {
+                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
+                } else {
+                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                }
             }
         }
     }
 
-    private Color getBoardCellColor(BoardCell boardCell) {
-        if (boardCell.isEmpty()) {
-            return Color.BLACK;
-        }
-        return getBlockColor(boardCell.getBlockType());
-    }
-
-    private Color getBlockColor(BlockType blockType) {
+    private BufferedImage getBlockSprite(BlockType blockType) {
         switch (blockType) {
             case I:
-                return Color.RED;
+                return sprites.getSprite(0);
             case J:
-                return Color.GRAY;
+                return sprites.getSprite(1);
             case L:
-                return Color.CYAN;
+                return sprites.getSprite(2);
             case O:
-                return Color.BLUE;
+                return sprites.getSprite(3);
             case S:
-                return Color.GREEN;
+                return sprites.getSprite(4);
             default:
-                return Color.MAGENTA;
+                return sprites.getSprite(5);
         }
     }
 
@@ -143,6 +149,11 @@ public class Tetris extends Canvas implements MouseListener {
         g.setColor(color);
         g.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
         g.drawRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
+    }
+
+    private void drawBlock(Graphics g, int x, int y, BufferedImage sprite) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(sprite, x, y, null);
     }
 
     @Override
