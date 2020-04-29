@@ -91,6 +91,14 @@ public class Board {
         move(0, -1);
     }
 
+    public void moveLeft(){
+        move(-1, 0);
+    }
+
+    public void moveRight(){
+        move(1,0);
+    }
+
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);

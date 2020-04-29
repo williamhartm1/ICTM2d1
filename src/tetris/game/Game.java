@@ -1,10 +1,14 @@
-package tetris.game;
+package Game;
+
 
 public class Game {
     private final Board board;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
+    private boolean leftIsPressed = false;
+    private boolean rightIsPressed = false;
+
 
     public Game() {
         board = new Board();
@@ -18,10 +22,37 @@ public class Game {
         return isDropping;
     }
 
+    public void setLeftPressed(boolean leftPressed) {
+        leftIsPressed = leftPressed;
+    }
+
+    public void setRightPressed(boolean rightPressed) {
+        rightIsPressed = rightPressed;
+    }
+
+    public boolean leftIsPressed(){
+        return leftIsPressed;
+    }
+
+    public boolean rightIsPressed(){
+        return rightIsPressed;
+    }
+
+    public void moveLeft(){
+        board.moveLeft();
+        this.leftIsPressed = false;
+    }
+
+    public void moveRight(){
+        board.moveRight();
+        this.rightIsPressed = false;
+    }
+
     public void startGame() {
         board.setCurrentBlock(Block.getRandomBlock());
         this.isPlaying = true;
     }
+
 
     //  dropping delay
     public long getIterationDelay() {
@@ -41,3 +72,4 @@ public class Game {
         }
     }
 }
+

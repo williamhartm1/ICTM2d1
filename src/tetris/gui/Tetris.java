@@ -77,6 +77,14 @@ public class Tetris extends Canvas implements MouseListener {
             game.moveDown();
             lastIteration = System.currentTimeMillis();
         }
+
+        if (game.leftIsPressed()){
+            game.moveLeft();
+        }
+
+        if (game.rightIsPressed()){
+            game.moveRight();
+        }
     }
 
     private Graphics2D getGameGraphics() {
