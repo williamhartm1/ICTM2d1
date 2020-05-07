@@ -76,6 +76,7 @@ public class Tetris extends Canvas implements MouseListener {
                 String stringBuffer = new String(newData,0,numRead);
 
                 serialString = stringBuffer;
+
                 while (!stringBuffer.endsWith("\n")) {  //alles voor een newline wordt in serialString opgeslagen
                     numRead = connectieArduino.usedPort.readBytes(newData, newData.length);
                     stringBuffer = new String(newData, 0, numRead, StandardCharsets.UTF_8);
