@@ -82,7 +82,6 @@ public class Tetris extends Canvas implements MouseListener {
                     serialString += stringBuffer;
                 }
 
-
                 if (serialString.equals("Left\r\n")) {
                     game.moveLeft();
                 } else if (serialString.equals("Right\r\n")){
