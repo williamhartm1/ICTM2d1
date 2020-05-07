@@ -3,6 +3,7 @@ package tetris.gui;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
+
 import tetris.connections.ConnectieArduino;
 import tetris.game.BlockType;
 import tetris.game.BoardCell;
@@ -60,36 +61,6 @@ public class Tetris extends Canvas implements MouseListener {
 
         createBufferStrategy(2);
         strategy = getBufferStrategy();
-
-        connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
-            String serialString;
-            @Override
-            public int getListeningEvents() {
-                return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
-            }
-
-            @Override
-            public void serialEvent(SerialPortEvent serialPortEvent) {
-
-                byte[] newData = new byte[connectieArduino.usedPort.bytesAvailable()];       //aantal beschikbare bytes
-                int numRead = connectieArduino.usedPort.readBytes(newData, newData.length);  //lees aantal bytes
-                String stringBuffer = new String(newData,0,numRead);
-
-                serialString = stringBuffer;
-
-                while (!stringBuffer.endsWith("\n")) {  //alles voor een newline wordt in serialString opgeslagen
-                    numRead = connectieArduino.usedPort.readBytes(newData, newData.length);
-                    stringBuffer = new String(newData, 0, numRead, StandardCharsets.UTF_8);
-                    serialString += stringBuffer;
-                }
-
-                if (serialString.equals("Left\r\n")) {
-                    game.moveLeft();
-                } else if (serialString.equals("Right\r\n")){
-                    game.moveRight();
-                }
-            }
-        });
     }
 
     public static void main(String[] args) throws IOException {
@@ -100,6 +71,37 @@ public class Tetris extends Canvas implements MouseListener {
     void gameLoop() {
         while (true) {
             if(game.isPlaying()) {
+                connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
+                    String serialString;
+                    @Override
+                    public int getListeningEvents() {
+                        return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+                    }
+
+                    @Override
+                    public void serialEvent(SerialPortEvent serialPortEvent) {
+
+                        byte[] newData = new byte[connectieArduino.usedPort.bytesAvailable()];       //aantal beschikbare bytes
+                        int numRead = connectieArduino.usedPort.readBytes(newData, newData.length);  //lees aantal bytes
+                        String stringBuffer = new String(newData,0,numRead);
+
+                        serialString = stringBuffer;
+
+                        while (!stringBuffer.endsWith("\n")) {  //alles voor een newline wordt in serialString opgeslagen
+                            numRead = connectieArduino.usedPort.readBytes(newData, newData.length);
+                            stringBuffer = new String(newData, 0, numRead, StandardCharsets.UTF_8);
+                            serialString += stringBuffer;
+                        }
+
+                        System.out.println(serialString);
+                        if (serialString.equals("Left\r\n")) {
+                            game.moveLeft();
+                        } else if (serialString.equals("Right\r\n")){
+                            game.moveRight();
+                        }
+                    }
+                });
+
                 tetrisLoop();
             }
             // slow down game loop
