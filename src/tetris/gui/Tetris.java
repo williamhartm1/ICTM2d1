@@ -1,9 +1,14 @@
 package tetris.gui;
 
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
+import tetris.connections.ConnectieArduino;
 import tetris.game.BlockType;
 import tetris.game.BoardCell;
 import tetris.game.Game;
 import tetris.game.SpriteSheetLoader;
+import tetris.input.KeyboardInput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class Tetris extends Canvas implements MouseListener {
     private Game game = new Game();
@@ -23,6 +29,10 @@ public class Tetris extends Canvas implements MouseListener {
     private static final int BLOCK_WIDTH = 20;
 
     private long lastIteration = System.currentTimeMillis();
+
+    private final KeyboardInput keyboard = new KeyboardInput();
+
+    private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
     private SpriteSheetLoader sprites;
 
@@ -45,10 +55,41 @@ public class Tetris extends Canvas implements MouseListener {
 
         container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        addKeyListener(keyboard);
         addMouseListener(this);
 
         createBufferStrategy(2);
         strategy = getBufferStrategy();
+
+        connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
+            String serialString;
+            @Override
+            public int getListeningEvents() {
+                return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+            }
+
+            @Override
+            public void serialEvent(SerialPortEvent serialPortEvent) {
+
+                byte[] newData = new byte[connectieArduino.usedPort.bytesAvailable()];       //aantal beschikbare bytes
+                int numRead = connectieArduino.usedPort.readBytes(newData, newData.length);  //lees aantal bytes
+                String stringBuffer = new String(newData,0,numRead);
+
+                serialString = stringBuffer;
+                while (!stringBuffer.endsWith("\n")) {  //alles voor een newline wordt in serialString opgeslagen
+                    numRead = connectieArduino.usedPort.readBytes(newData, newData.length);
+                    stringBuffer = new String(newData, 0, numRead, StandardCharsets.UTF_8);
+                    serialString += stringBuffer;
+                }
+
+
+                if (serialString.equals("Left\r\n")) {
+                    game.moveLeft();
+                } else if (serialString.equals("Right\r\n")){
+                    game.moveRight();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) throws IOException {
@@ -70,12 +111,21 @@ public class Tetris extends Canvas implements MouseListener {
     }
 
     void tetrisLoop() {
-        // TODO: rotate, left, right, drop
         if (game.isDropping()) {
             game.moveDown();
         } else if(System.currentTimeMillis() - lastIteration >= game.getIterationDelay()) {
             game.moveDown();
             lastIteration = System.currentTimeMillis();
+        }
+
+        if (keyboard.rotate()) {
+            game.rotate();
+        } else if (keyboard.left()) {
+            game.moveLeft();
+        } else if (keyboard.right()) {
+            game.moveRight();
+        } else if (keyboard.drop()) {
+            game.drop();
         }
     }
 
