@@ -40,4 +40,20 @@ public class Game {
             board.moveDown();
         }
     }
+
+    public void rotate() {
+        board.rotate();
+    }
+
+    public void drop() {
+        isDropping = true;
+    }
+
+    public void moveLeft() {
+        board.moveLeft();
+    }
+
+    public void moveRight() {
+        board.moveRight();
+    }
 }
