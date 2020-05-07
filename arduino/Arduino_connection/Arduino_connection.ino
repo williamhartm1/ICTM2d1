@@ -23,7 +23,7 @@ void loop() {
 
 void checkRightButton(){
   int rightState = digitalRead(RIGHTBUTTON);
-
+  
   if (rightState == 0 && millis() - previous_time > interval){
     Serial.println("Right");
     previous_time = millis();
