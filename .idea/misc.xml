@@ -9,8 +9,12 @@
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/.." />
   </component>
+<<<<<<< database
   <component name="ProjectRootManager" version="2" languageLevel="JDK_14" project-jdk-name="14" project-jdk-type="JavaSDK">
 >>>>>>> feat(): move left, right, down
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" project-jdk-name="11" project-jdk-type="JavaSDK">
+>>>>>>> Library jSerialComm toegevoegd in /Lib/
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

@@ -8,9 +8,13 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
 <<<<<<< database
+<<<<<<< database
     <orderEntry type="library" name="mysql-connector-java-5.1.48" level="project" />
 =======
     <orderEntry type="library" name="com.fazecast:jSerialComm:2.6.2" level="project" />
 >>>>>>> feat(): move left, right, down
+=======
+    <orderEntry type="library" name="jSerialComm-2.6.1" level="project" />
+>>>>>>> Library jSerialComm toegevoegd in /Lib/
   </component>
 </module>
