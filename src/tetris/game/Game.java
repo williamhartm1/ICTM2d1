@@ -1,4 +1,4 @@
-package Game;
+package tetris.game;
 
 
 public class Game {

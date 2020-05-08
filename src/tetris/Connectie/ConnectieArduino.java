@@ -1,9 +1,9 @@
-package Connectie;
+package tetris.Connectie;
 
-import GUI.*;
+import tetris.gui.*;
 
-import Game.Board;
-import Game.Game;
+import tetris.game.Board;
+import tetris.game.Game;
 import com.fazecast.jSerialComm.*;
 
 import java.nio.charset.StandardCharsets;
