@@ -20,8 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class Tetris extends Canvas implements MouseListener {
-    private Game game = new Game();
+public class Tetris extends Canvas implements MouseListener, Runnable {
+    private Game game;
     // zorgt voor memory management van het canvas
     private final BufferStrategy strategy;
 
@@ -38,7 +38,8 @@ public class Tetris extends Canvas implements MouseListener {
     private SpriteSheetLoader sprites;
 
 
-    public Tetris() throws IOException {
+    public Tetris(Game game) throws IOException {
+        this.game = game;
         JFrame container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
         panel.setPreferredSize(new Dimension(220, 600));
@@ -64,12 +65,8 @@ public class Tetris extends Canvas implements MouseListener {
         strategy = getBufferStrategy();
     }
 
-    public static void main(String[] args) throws IOException {
-        new Tetris().gameLoop();
-    }
-
     // gameLoop blijft status game checken
-    void gameLoop() {
+    public void run() {
         while (true) {
             if(game.isPlaying()) {
                 connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
@@ -94,7 +91,7 @@ public class Tetris extends Canvas implements MouseListener {
                             serialString += stringBuffer;
                         }
 
-                        System.out.println(serialString);
+                        System.out.print(serialString);
                         if (serialString.equals("Left\r\n")) {
                             game.moveLeft();
                         } else if (serialString.equals("Right\r\n")){
@@ -163,7 +160,7 @@ public class Tetris extends Canvas implements MouseListener {
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
                 } else {
-                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                    //drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
                 }
             }
         }
@@ -185,6 +182,8 @@ public class Tetris extends Canvas implements MouseListener {
                 return sprites.getSprite(5);
         }
     }
+
+
 
     private void drawStartGameButton(Graphics2D g) {
         g.setColor(Color.GREEN);

@@ -13,7 +13,7 @@ public class ConnectieArduino {
         SerialPort availablePorts[];
         availablePorts = SerialPort.getCommPorts();  //check all available ports
         if (availablePorts.length != 0) {
-            usedPort = availablePorts[1];    //take the first port (Arduino)
+            usedPort = availablePorts[0];    //take the first port (Arduino)
             usedPort.openPort();                        //open this port
 
             if (usedPort.isOpen()) {

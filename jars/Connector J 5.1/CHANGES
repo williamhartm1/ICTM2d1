@@ -59,7 +59,7 @@ Version 5.1.47
   - Fix for Bug#72609 (18749544), SETDATE() NOT USING A PROLEPTIC GREGORIAN CALENDAR.
 
   - Fix for Bug#87534 (26730196), UNION ALL query fails when useServerPrepStmts=true on database connection.
-    Test case only. Base bug fixed in MySQL 5.7.22.
+    TetrisMain case only. Base bug fixed in MySQL 5.7.22.
 
   - Fix for Bug#89948 (27658489), Batched statements are not committed for useLocalTransactionState=true.
 
@@ -404,7 +404,7 @@ Version 5.1.42
   - New property 'readOnlyPropagatesToServer' controls the implicit propagation of read only transaction access mode to server.
 
   - Fix for Bug#54095 (11761585), Unnecessary call in newSetTimestampInternal.
-    Test case only. The bug was fixed as a consequence of the patch for Bug#71084.
+    TetrisMain case only. The bug was fixed as a consequence of the patch for Bug#71084.
 
   - Fix for Bug#67760 (15936413), Deadlock when concurrently executing prepared statements with Timestamp objects.
 
@@ -437,7 +437,7 @@ Version 5.1.42
 09-29-14 - Version 5.1.33
 
   - Fix for Bug#17441747, C/J DOESN'T SUPPORT XA RECOVER OUTPUT FORMAT CHANGED IN MYSQL 5.7.
-    Test case was disabled for affected server versions 5.7.0 - 5.7.4.
+    TetrisMain case was disabled for affected server versions 5.7.0 - 5.7.4.
 
   - Fix for Bug#19145408, Error messages may not be interpreted according to the proper character set
 
@@ -504,7 +504,7 @@ Version 5.1.42
 
   - Fix for Bug#61213 (18009254), ON DUPLICATE KEY UPDATE breaks generated key list when extended INSERT is used
 
-  - Test cases updated to comply with MySQL 5.7.4 new STRICT_MODE behavior and no longer supported IGNORE clause in
+  - TetrisMain cases updated to comply with MySQL 5.7.4 new STRICT_MODE behavior and no longer supported IGNORE clause in
     ALTER TABLE statement.
 
   - Added support for sha256_password authentication with RSA encryption.
@@ -793,7 +793,7 @@ Version 5.1.42
     This was partly fixed in 5.1.19 but that fix did not cover useLegacyDatetimeCode=true case.
 
   - Fix for Bug#14665141, Diff results returned from ResultSet and CachedRowSet with new password hashing.
-    Test suite modified to don't perform comparison of PASSWORD() results if old_passwords=2
+    TetrisMain suite modified to don't perform comparison of PASSWORD() results if old_passwords=2
     because with SHA-256 password hashing enabled they are nondeterministic.
     
   - The driver now allows the mechanism for caching MySQL server configuration values replaceable at runtime,
