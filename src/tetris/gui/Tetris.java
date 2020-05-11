@@ -55,6 +55,7 @@ public class Tetris extends Canvas implements MouseListener {
         container.setVisible(true);
 
         container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container.setLocationRelativeTo(null);
 
         addKeyListener(keyboard);
         addMouseListener(this);
@@ -141,6 +142,8 @@ public class Tetris extends Canvas implements MouseListener {
 
         if(!game.isPlaying()) {
             drawStartGameButton(g);
+            drawRankingButton(g);
+            drawSettingsButton(g);
         }
 
         if(game.isPlaying()) {
@@ -185,9 +188,23 @@ public class Tetris extends Canvas implements MouseListener {
 
     private void drawStartGameButton(Graphics2D g) {
         g.setColor(Color.GREEN);
-        g.fillRect(65, 450, 100, 50);
+        g.fillRect(65, 450, 100, 30);
         g.setColor(Color.BLACK);
-        g.drawString("Start game", 85 - 1, 480 - 1);
+        g.drawString("Start game", 85 - 1, 465 - 1);
+    }
+
+    private void drawRankingButton(Graphics2D g) {
+        g.setColor(Color.GREEN);
+        g.fillRect(65, 500, 100, 30);
+        g.setColor(Color.BLACK);
+        g.drawString("Ranking", 92 - 1, 515 - 1);
+    }
+
+    private void drawSettingsButton(Graphics2D g) {
+        g.setColor(Color.GREEN);
+        g.fillRect(65, 550, 100, 30);
+        g.setColor(Color.BLACK);
+        g.drawString("Settings", 85 - 1, 620 - 1);
     }
 
     private void drawInitialBoard(Graphics2D g) {
