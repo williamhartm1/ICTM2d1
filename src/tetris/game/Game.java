@@ -1,18 +1,11 @@
 package tetris.game;
 
-
 public class Game {
     private Board board;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
-<<<<<<< HEAD
-    private boolean leftIsPressed = false;
-    private boolean rightIsPressed = false;
-
-=======
     private boolean isPaused = false;
->>>>>>> master
 
     public Game() {
         board = new Board();
@@ -26,32 +19,6 @@ public class Game {
         return isDropping;
     }
 
-<<<<<<< HEAD
-    public void setLeftPressed(boolean leftPressed) {
-        leftIsPressed = leftPressed;
-    }
-
-    public void setRightPressed(boolean rightPressed) {
-        rightIsPressed = rightPressed;
-    }
-
-    public boolean leftIsPressed(){
-        return leftIsPressed;
-    }
-
-    public boolean rightIsPressed(){
-        return rightIsPressed;
-    }
-
-    public void moveLeft(){
-        board.moveLeft();
-        this.leftIsPressed = false;
-    }
-
-    public void moveRight(){
-        board.moveRight();
-        this.rightIsPressed = false;
-=======
     public boolean isPaused(){ return isPaused;}
 
     public void setPause(boolean isPaused){
@@ -61,14 +28,12 @@ public class Game {
     public void setPause(boolean isPaused, boolean isPlaying){
         this.isPaused = isPaused;
         this.isPlaying = isPlaying;
->>>>>>> master
     }
 
     public void startGame() {
         board.setCurrentBlock(Block.getRandomBlock());
         this.isPlaying = true;
     }
-
 
     //  dropping delay
     public long getIterationDelay() {
@@ -92,8 +57,12 @@ public class Game {
         }
     }
 
-    public void rotate() {
-        board.rotate();
+    public void rotateRight() {
+        board.rotateRight();
+    }
+
+    public void rotateLeft(){
+        board.rotateLeft();
     }
 
     public void drop() {
@@ -109,4 +78,3 @@ public class Game {
     }
 
 }
-

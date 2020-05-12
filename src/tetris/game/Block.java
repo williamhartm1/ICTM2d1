@@ -29,9 +29,14 @@ public class Block {
         return points;
     }
 
-    public Block rotate() {
+    public Block rotateRight() {
         return new Block(type, rotateRight(points));
     }
+    
+    public Block rotateLeft() {
+        return new Block(type, rotateLeft(points));
+    }
+
 
     private Point[] rotate(Point toRotate[], int x, int y) {
         Point rotated[] = new Point[4];
@@ -47,4 +52,9 @@ public class Block {
     private Point[] rotateRight(Point toRotate[]) {
         return rotate(toRotate, -1, 1);
     }
+
+    private Point[] rotateLeft(Point toRotate[]) {
+        return rotate(toRotate, 1, -1);
+    }
+
 }

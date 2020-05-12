@@ -1,17 +1,13 @@
-import tetris.game.Game;
-import tetris.gui.Tetris;
+import tetris.game.Tetris;
 
 import java.io.IOException;
 
 public class TetrisMain {
     public static void main(String[] args) throws IOException {
-        //game houd het spelverloop bij
-        Game spelverloop = new Game();
+        Tetris tetris = new Tetris();
 
-        //tetris print de gui
-        Tetris gui = new Tetris(spelverloop);
-        Thread guiThread = new Thread(gui, "gui thread");
+        Thread tetrisThread = new Thread(tetris, "tetris Thread");
 
-        guiThread.start();
+        tetrisThread.start();
     }
 }

@@ -6,7 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class SpriteSheetLoader {
-    BufferedImage spriteSheet = ImageIO.read(new File("game/sprites.png"));
+    /*
+    BufferedImage spriteSheet = ImageIO.read(new File("sprites.png"));
 
     int width;
     int height;
@@ -27,4 +28,8 @@ public class SpriteSheetLoader {
     public BufferedImage getSprite(int column) {
         return sprites[column];
     }
+
+     */
 }
+
+

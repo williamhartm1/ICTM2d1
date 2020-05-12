@@ -82,8 +82,15 @@ public class Board {
         return true;
     }
 
-    public void rotate() {
-        Block rot = currentBlock.rotate();
+    public void rotateLeft() {
+        Block rot = currentBlock.rotateLeft();
+        if (fit(rot.getPoints(), 0, 0)) {
+            currentBlock = rot;
+        }
+    }
+
+    public void rotateRight(){
+        Block rot = currentBlock.rotateRight();
         if (fit(rot.getPoints(), 0, 0)) {
             currentBlock = rot;
         }
@@ -96,14 +103,6 @@ public class Board {
 
     public void moveDown() {
         move(0, -1);
-    }
-
-    public void moveLeft(){
-        move(-1, 0);
-    }
-
-    public void moveRight(){
-        move(1,0);
     }
 
     // Helper to current block center X and Y
