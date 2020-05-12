@@ -1,11 +1,12 @@
 #define LEFTBUTTON 2
 #define RIGHTBUTTON 3
 #define POTMETER A0
+#define LDR A1
 
 long previous_time = millis();
 int interval = 200;
 
-int previousValue = 1;
+static int potmeterPrevValue = map(analogRead(POTMETER), 0, 1023, 1, 4);
 
 void setup() {
   Serial.begin(9600);
@@ -18,13 +19,14 @@ void setup() {
 void loop() {
   checkRightButton();
   checkLeftButton();
-  //checkPotmeter();
+  checkPotmeter();
+  checkLdr();
 }
 
 void checkRightButton(){
   int rightState = digitalRead(RIGHTBUTTON);
   
-  if (rightState == 0 && millis() - previous_time > interval){
+  if (rightState == 1){
     Serial.println("Right");
     previous_time = millis();
   }
@@ -33,21 +35,31 @@ void checkRightButton(){
 void checkLeftButton(){
   int leftState = digitalRead(LEFTBUTTON);
 
-  if (leftState == 0 && millis() - previous_time > interval){
+  if (leftState == 1){
     Serial.println("Left");
     previous_time = millis();
   }
 }
 
 void checkPotmeter(){
-  int potmeterValue = map(analogRead(POTMETER), 0, 1022, 1, 4);
-  if (millis() - previous_time > interval){
-    if (potmeterValue > previousValue){
-      Serial.println("Rotate right");
-      previousValue = potmeterValue;
-    } else if (potmeterValue < previousValue){
-      Serial.println("Rotate left");
-      previousValue = potmeterValue;
-    }
+  int potmeterCurrValue = map(analogRead(POTMETER), 0, 1023, 1, 5);
+  
+  if (potmeterCurrValue > potmeterPrevValue){
+    Serial.println("Rotated right");
+    delay(interval);
+  } else if (potmeterCurrValue < potmeterPrevValue){
+    Serial.println("Rotated left");
+    delay(interval);
+  }
+
+  potmeterPrevValue = potmeterCurrValue;
+}
+
+void checkLdr() {
+  int ldrValue = analogRead(LDR);
+
+  while (ldrValue < 15) {
+    ldrValue = analogRead(LDR);
+    Serial.println("Pause");
   }
 }

@@ -20,8 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class Tetris extends Canvas implements MouseListener {
-    private Game game = new Game();
+public class Tetris extends Canvas implements MouseListener, Runnable {
+    private Game game;
     // zorgt voor memory management van het canvas
     private final BufferStrategy strategy;
 
@@ -38,7 +38,8 @@ public class Tetris extends Canvas implements MouseListener {
     private SpriteSheetLoader sprites;
 
 
-    public Tetris() throws IOException {
+    public Tetris(Game game) throws IOException {
+        this.game = game;
         JFrame container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
         panel.setPreferredSize(new Dimension(220, 600));
@@ -55,6 +56,7 @@ public class Tetris extends Canvas implements MouseListener {
         container.setVisible(true);
 
         container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container.setLocationRelativeTo(null);
 
         addKeyListener(keyboard);
         addMouseListener(this);
@@ -63,12 +65,8 @@ public class Tetris extends Canvas implements MouseListener {
         strategy = getBufferStrategy();
     }
 
-    public static void main(String[] args) throws IOException {
-        new Tetris().gameLoop();
-    }
-
     // gameLoop blijft status game checken
-    void gameLoop() {
+    public void run() {
         while (true) {
             if(game.isPlaying()) {
                 // start luisteren naar events van arduino
@@ -94,7 +92,7 @@ public class Tetris extends Canvas implements MouseListener {
                             serialString += stringBuffer;
                         }
 
-                        System.out.println(serialString);
+                        System.out.print(serialString);
                         if (serialString.equals("Left\r\n")) {
                             game.moveLeft();
                         } else if (serialString.equals("Right\r\n")){
@@ -143,6 +141,8 @@ public class Tetris extends Canvas implements MouseListener {
 
         if(!game.isPlaying()) {
             drawStartGameButton(g);
+            drawRankingButton(g);
+            drawSettingsButton(g);
         }
 
         if(game.isPlaying()) {
@@ -163,7 +163,7 @@ public class Tetris extends Canvas implements MouseListener {
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
                 } else {
-                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                    //drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
                 }
             }
         }
@@ -186,11 +186,27 @@ public class Tetris extends Canvas implements MouseListener {
         }
     }
 
+
+
     private void drawStartGameButton(Graphics2D g) {
         g.setColor(Color.GREEN);
-        g.fillRect(65, 450, 100, 50);
+        g.fillRect(65, 450, 100, 30);
         g.setColor(Color.BLACK);
-        g.drawString("Start game", 85 - 1, 480 - 1);
+        g.drawString("Start game", 85 - 1, 465 - 1);
+    }
+
+    private void drawRankingButton(Graphics2D g) {
+        g.setColor(Color.GREEN);
+        g.fillRect(65, 500, 100, 30);
+        g.setColor(Color.BLACK);
+        g.drawString("Ranking", 92 - 1, 515 - 1);
+    }
+
+    private void drawSettingsButton(Graphics2D g) {
+        g.setColor(Color.GREEN);
+        g.fillRect(65, 550, 100, 30);
+        g.setColor(Color.BLACK);
+        g.drawString("Settings", 85 - 1, 620 - 1);
     }
 
     private void drawEmptyBoard(Graphics2D g) {
