@@ -58,7 +58,7 @@ void checkPotmeter(){
 void checkLdr() {
   int ldrValue = analogRead(LDR);
 
-  while (ldrValue < 200) {
+  while (ldrValue < 150) {
     ldrValue = analogRead(LDR);
     Serial.println("Pause");
   }

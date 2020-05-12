@@ -210,7 +210,6 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
     }
 
 
-
     private void drawStartGameButton(Graphics2D g) {
         g.setColor(Color.GREEN);
         g.fillRect(65, 450, 100, 30);

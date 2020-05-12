@@ -1,7 +1,7 @@
 package tetris.game;
 
 public class Game {
-    private final Board board;
+    private Board board;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
@@ -45,7 +45,7 @@ public class Game {
     }
 
     public void removeBoardCells(){
-        board.removeAllPieces();
+        board = new Board();
     }
 
     public void moveDown() {

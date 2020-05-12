@@ -85,7 +85,6 @@ public class Board {
     public void rotate() {
         Block rot = currentBlock.rotate();
         if (fit(rot.getPoints(), 0, 0)) {
-
             currentBlock = rot;
         }
     }
@@ -114,9 +113,5 @@ public class Board {
         if (fit(currentBlock.getPoints(), 1, 0)) {
             move(1, 0);
         }
-    }
-
-    public void removeAllPieces(){
-        //board.removeAll();
     }
 }
