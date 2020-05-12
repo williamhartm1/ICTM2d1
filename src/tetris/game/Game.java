@@ -2,13 +2,17 @@ package tetris.game;
 
 
 public class Game {
-    private final Board board;
+    private Board board;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
+<<<<<<< HEAD
     private boolean leftIsPressed = false;
     private boolean rightIsPressed = false;
 
+=======
+    private boolean isPaused = false;
+>>>>>>> master
 
     public Game() {
         board = new Board();
@@ -22,6 +26,7 @@ public class Game {
         return isDropping;
     }
 
+<<<<<<< HEAD
     public void setLeftPressed(boolean leftPressed) {
         leftIsPressed = leftPressed;
     }
@@ -46,6 +51,17 @@ public class Game {
     public void moveRight(){
         board.moveRight();
         this.rightIsPressed = false;
+=======
+    public boolean isPaused(){ return isPaused;}
+
+    public void setPause(boolean isPaused){
+        this.isPaused = isPaused;
+    }
+
+    public void setPause(boolean isPaused, boolean isPlaying){
+        this.isPaused = isPaused;
+        this.isPlaying = isPlaying;
+>>>>>>> master
     }
 
     public void startGame() {
@@ -63,6 +79,10 @@ public class Game {
         return board.getBoardWithPiece();
     }
 
+    public void removeBoardCells(){
+        board = new Board();
+    }
+
     public void moveDown() {
         if (!board.canCurrentPieceMoveDown()) {
             isDropping = false;
@@ -71,5 +91,22 @@ public class Game {
             board.moveDown();
         }
     }
+
+    public void rotate() {
+        board.rotate();
+    }
+
+    public void drop() {
+        isDropping = true;
+    }
+
+    public void moveLeft() {
+        board.moveLeft();
+    }
+
+    public void moveRight() {
+        board.moveRight();
+    }
+
 }
 

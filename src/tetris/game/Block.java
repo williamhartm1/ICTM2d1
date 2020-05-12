@@ -28,4 +28,23 @@ public class Block {
     public Point[] getPoints() {
         return points;
     }
+
+    public Block rotate() {
+        return new Block(type, rotateRight(points));
+    }
+
+    private Point[] rotate(Point toRotate[], int x, int y) {
+        Point rotated[] = new Point[4];
+
+        for (int i = 0; i < 4; i++) {
+            int temp = toRotate[i].x;
+            rotated[i] = new Point(x * toRotate[i].y, y * temp);
+        }
+
+        return rotated;
+    }
+
+    private Point[] rotateRight(Point toRotate[]) {
+        return rotate(toRotate, -1, 1);
+    }
 }

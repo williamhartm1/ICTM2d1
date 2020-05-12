@@ -82,6 +82,13 @@ public class Board {
         return true;
     }
 
+    public void rotate() {
+        Block rot = currentBlock.rotate();
+        if (fit(rot.getPoints(), 0, 0)) {
+            currentBlock = rot;
+        }
+    }
+
     private void resetPieceCenter() {
         blockCenter.x = DROP_X;
         blockCenter.y = DROP_Y;
@@ -102,5 +109,17 @@ public class Board {
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
+    }
+
+    public void moveLeft() {
+        if (fit(currentBlock.getPoints(), -1, 0)) {
+            move( -1, 0);
+        }
+    }
+
+    public void moveRight() {
+        if (fit(currentBlock.getPoints(), 1, 0)) {
+            move(1, 0);
+        }
     }
 }
