@@ -1,4 +1,4 @@
-package tetris.game;
+package threading.game;
 
 import java.awt.*;
 
@@ -85,6 +85,7 @@ public class Board {
     public void rotate() {
         Block rot = currentBlock.rotate();
         if (fit(rot.getPoints(), 0, 0)) {
+
             currentBlock = rot;
         }
     }

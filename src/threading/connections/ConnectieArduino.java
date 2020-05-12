@@ -1,10 +1,6 @@
-package tetris.connections;
+package threading.connections;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortDataListener;
-import com.fazecast.jSerialComm.SerialPortEvent;
-
-import java.nio.charset.StandardCharsets;
 
 public class ConnectieArduino {
     public static SerialPort usedPort; // de te gebruiken port

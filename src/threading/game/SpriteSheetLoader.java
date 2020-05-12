@@ -1,4 +1,4 @@
-package tetris.game;
+package threading.game;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -6,17 +6,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class SpriteSheetLoader {
-    BufferedImage spriteSheet = ImageIO.read(new File("game/sprites.png"));
+    BufferedImage spriteSheet;
 
     int width;
     int height;
     int columns;
     BufferedImage[] sprites;
 
-    public SpriteSheetLoader(int width, int height, int columns) throws IOException {
+    public SpriteSheetLoader(int width, int height, int columns, String imagePath) throws IOException {
         this.width = width;
         this.height = height;
         this.columns = columns;
+        spriteSheet = ImageIO.read(new File(imagePath));
         sprites = new BufferedImage[columns];
 
             for(int j = 0; j < columns; j++) {
