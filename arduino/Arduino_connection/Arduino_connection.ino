@@ -45,10 +45,10 @@ void checkPotmeter(){
   int potmeterCurrValue = map(analogRead(POTMETER), 0, 1023, 1, 5);
   
   if (potmeterCurrValue > potmeterPrevValue){
-    Serial.println("Rotated right");
+    Serial.println("Rotate right");
     delay(interval);
   } else if (potmeterCurrValue < potmeterPrevValue){
-    Serial.println("Rotated left");
+    Serial.println("Rotate left");
     delay(interval);
   }
 
@@ -58,7 +58,7 @@ void checkPotmeter(){
 void checkLdr() {
   int ldrValue = analogRead(LDR);
 
-  while (ldrValue < 15) {
+  while (ldrValue < 200) {
     ldrValue = analogRead(LDR);
     Serial.println("Pause");
   }

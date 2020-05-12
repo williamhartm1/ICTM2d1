@@ -37,10 +37,12 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
 
     private SpriteSheetLoader sprites;
 
+    JFrame container;
+
 
     public Tetris(Game game) throws IOException {
         this.game = game;
-        JFrame container = new JFrame("Tetris");
+        container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
         panel.setPreferredSize(new Dimension(220, 600));
         panel.setLayout(null);
@@ -97,6 +99,12 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
                             game.moveLeft();
                         } else if (serialString.equals("Right\r\n")){
                             game.moveRight();
+                        } else if (serialString.equals("Pause\r\n")){
+                            game.setPause(true);
+                        } else if (serialString.equals("Rotate right\r\n")){
+                            game.rotate();
+                        } else if (serialString.equals("Rotate left\r\n")){
+                            game.rotate();
                         }
                     }
                 });
@@ -145,6 +153,10 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
             drawSettingsButton(g);
         }
 
+        if (game.isPaused()){
+            drawPauseMenu(g);
+        }
+
         if(game.isPlaying()) {
             drawCells(g);
         }
@@ -153,7 +165,17 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
         strategy.show();
     }
 
-    // zorgt voor het tekenen van het speelveld elke
+    private void drawPauseMenu(Graphics2D g){
+        Pauzescherm pauze = new Pauzescherm(container, game);
+        if (pauze.getQuit()){
+            game.setPause(false, false);
+            //canvas resetten
+            game.removeBoardCells();
+        } else {
+            game.setPause(false);
+        }
+    }
+
     private void drawCells(Graphics2D g) {
         BoardCell[][] cells = game.getBoardCells();
         for (int i = 0; i < 10; i++) {
@@ -167,6 +189,7 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
                 }
             }
         }
+        g.drawString("Dek de LDR af om het spel te pauzeren", 10, 500);
     }
 
     private BufferedImage getBlockSprite(BlockType blockType) {

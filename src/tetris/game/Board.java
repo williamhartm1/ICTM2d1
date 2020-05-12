@@ -115,4 +115,8 @@ public class Board {
             move(1, 0);
         }
     }
+
+    public void removeAllPieces(){
+        //board.removeAll();
+    }
 }
