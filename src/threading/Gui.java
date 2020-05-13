@@ -1,15 +1,14 @@
-package tetris.gui;
+package threading;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
-
-import tetris.connections.ConnectieArduino;
-import tetris.game.BlockType;
-import tetris.game.BoardCell;
-import tetris.game.Game;
-import tetris.game.SpriteSheetLoader;
-import tetris.input.KeyboardInput;
+import threading.connections.ConnectieArduino;
+import threading.input.KeyboardInput;
+import threading.game.BlockType;
+import threading.game.BoardCell;
+import threading.game.Game;
+import threading.game.SpriteSheetLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +16,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class Tetris extends Canvas implements MouseListener, Runnable {
+public class Gui extends Canvas implements Runnable, MouseListener {
     private Game game;
-    // zorgt voor memory management van het canvas
-    private final BufferStrategy strategy;
+    private SpriteSheetLoader sprites;
 
     private final int CORNER = 5;
 
@@ -35,43 +32,38 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
 
     private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
-    private SpriteSheetLoader sprites;
+    // zorgt voor memory management van het canvas
+    private final BufferStrategy strategy;
 
+    public Gui(Game game, SpriteSheetLoader sprites) {
+        this.game = game;
+        this.sprites = sprites;
 
-    public Tetris() throws IOException {
         JFrame container = new JFrame("Tetris");
         JPanel panel = (JPanel) container.getContentPane();
         panel.setPreferredSize(new Dimension(220, 600));
         panel.setLayout(null);
 
-        sprites = new SpriteSheetLoader(20, 20,  6);
-
         setBounds(0, 0, 800, 600);
         panel.add(this);
-
 
         container.pack();
         container.setResizable(false);
         container.setVisible(true);
 
-        container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        container.setLocationRelativeTo(null);
-
         addKeyListener(keyboard);
         addMouseListener(this);
+
+        container.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         createBufferStrategy(2);
         strategy = getBufferStrategy();
     }
 
-    public static void main(String[] args) throws IOException {
-        new Tetris().gameLoop();
-    }
-
-    // gameLoop blijft status game checken
     public void run() {
-        while (true) {
+        while(true){
             if(game.isPlaying()) {
+                // start luisteren naar events van arduino
                 connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
                     String serialString;
                     @Override
@@ -105,17 +97,19 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
 
                 tetrisLoop();
             }
-            // slow down game loop
+            draw();
             try {
                 Thread.sleep(20);
-            } catch (Exception e) { }
-            draw();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     void tetrisLoop() {
         if (game.isDropping()) {
             game.moveDown();
+            // per tick het blokje op y naar beneden doen
         } else if(System.currentTimeMillis() - lastIteration >= game.getIterationDelay()) {
             game.moveDown();
             lastIteration = System.currentTimeMillis();
@@ -132,18 +126,12 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
         }
     }
 
-    private Graphics2D getGameGraphics() {
-        return (Graphics2D) strategy.getDrawGraphics();
-    }
-
     public void draw() {
         Graphics2D g = getGameGraphics();
-        drawInitialBoard(g);
+        drawEmptyBoard(g);
 
         if(!game.isPlaying()) {
             drawStartGameButton(g);
-            drawRankingButton(g);
-            drawSettingsButton(g);
         }
 
         if(game.isPlaying()) {
@@ -154,11 +142,30 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
         strategy.show();
     }
 
+    private Graphics2D getGameGraphics() {
+        return (Graphics2D) strategy.getDrawGraphics();
+    }
+
+    private void drawEmptyBoard(Graphics2D g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 800, 600);
+        g.setColor(Color.GRAY);
+        g.drawRect(CORNER - 1, CORNER - 1, 10 * BLOCK_WIDTH + 2, 20 * BLOCK_WIDTH + 2);
+    }
+
+    private void drawStartGameButton(Graphics2D g) {
+        g.setColor(Color.GREEN);
+        g.fillRect(65, 450, 100, 50);
+        g.setColor(Color.BLACK);
+        g.drawString("Start game", 85 - 1, 480 - 1);
+    }
+
+    // zorgt voor het tekenen van het speelveld elke
     private void drawCells(Graphics2D g) {
         BoardCell[][] cells = game.getBoardCells();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 20; j++) {
-                 BoardCell cell = cells[i][j];
+                BoardCell cell = cells[i][j];
 
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
@@ -186,34 +193,6 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
         }
     }
 
-    private void drawStartGameButton(Graphics2D g) {
-        g.setColor(Color.GREEN);
-        g.fillRect(65, 450, 100, 30);
-        g.setColor(Color.BLACK);
-        g.drawString("Start game", 85 - 1, 465 - 1);
-    }
-
-    private void drawRankingButton(Graphics2D g) {
-        g.setColor(Color.GREEN);
-        g.fillRect(65, 500, 100, 30);
-        g.setColor(Color.BLACK);
-        g.drawString("Ranking", 92 - 1, 515 - 1);
-    }
-
-    private void drawSettingsButton(Graphics2D g) {
-        g.setColor(Color.GREEN);
-        g.fillRect(65, 550, 100, 30);
-        g.setColor(Color.BLACK);
-        g.drawString("Settings", 85 - 1, 620 - 1);
-    }
-
-    private void drawInitialBoard(Graphics2D g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 800, 600);
-        g.setColor(Color.GRAY);
-        g.drawRect(CORNER - 1, CORNER - 1, 10 * BLOCK_WIDTH + 2, 20 * BLOCK_WIDTH + 2);
-    }
-
     private void drawBlock(Graphics g, int x, int y, Color color) {
         g.setColor(color);
         g.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
@@ -232,6 +211,7 @@ public class Tetris extends Canvas implements MouseListener, Runnable {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println("asd");
         if(!game.isPlaying() && e.getX() > 65 && e.getX() < 165 && e.getY() > 450 && e.getY() < 500) {
             game.startGame();
         }

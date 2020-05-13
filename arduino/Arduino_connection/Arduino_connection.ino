@@ -1,3 +1,4 @@
+void checkBothButtons() {
 #define LEFTBUTTON 2
 #define RIGHTBUTTON 3
 #define POTMETER A0

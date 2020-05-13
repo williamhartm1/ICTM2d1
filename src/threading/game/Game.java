@@ -1,9 +1,9 @@
-package tetris.game;
+package threading.game;
 
 public class Game {
-    private Board board;
+    private final Board board;
 
-    private boolean playing = false;
+    private boolean isPlaying = false;
     private boolean isDropping = false;
 
     public Game() {
@@ -19,7 +19,7 @@ public class Game {
     }
 
     public void startGame() {
-        this.playing = true;
+        board.setCurrentBlock(Block.getRandomBlock());
         this.isPlaying = true;
     }
 
