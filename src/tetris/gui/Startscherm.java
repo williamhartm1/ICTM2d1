@@ -28,11 +28,16 @@ public class Startscherm extends JFrame implements ActionListener {
         jtNaam = new JTextField(20);
         add(jtNaam);
 
-        jrEasy = new JRadioButton("Easy", true);
+        jrEasy = new JRadioButton("Easy");
+        jrEasy.addActionListener(this);
         add(jrEasy);
+
         jrMedium = new JRadioButton("Medium");
+        jrMedium.addActionListener(this);
         add(jrMedium);
+
         jrHard = new JRadioButton("Hard");
+        jrHard.addActionListener(this);
         add(jrHard);
 
         group = new ButtonGroup();
@@ -56,10 +61,29 @@ public class Startscherm extends JFrame implements ActionListener {
             dispose();
         } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
+            ranking.setVisible(true);
+        } else if (e.getSource() == jrEasy) {
+            isEasy = true;
+        } else if (e.getSource() == jrMedium) {
+            isMedium = true;
+        } else if (e.getSource() == jrHard) {
+            isHard = true;
         }
     }
 
     public String getNaam(){
         return jtNaam.getText();
+    }
+
+    public boolean getIsEasy() {
+        return isEasy;
+    }
+
+    public boolean getIsMedium() {
+        return isMedium;
+    }
+
+    public boolean getIsHard() {
+        return isHard;
     }
 }
