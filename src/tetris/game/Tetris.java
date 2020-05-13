@@ -35,6 +35,8 @@ public class Tetris extends Canvas implements Runnable {
         gui = new Gui(game);
         startscherm = new Startscherm(game);
 
+        addKeyListener(keyboard);
+
         //sprites = new SpriteSheetLoader(20, 20,  6);
     }
 
@@ -96,6 +98,8 @@ public class Tetris extends Canvas implements Runnable {
                             game.rotateRight();
                         } else if (serialString.equals("Rotate left\r\n")) {
                             game.rotateLeft();
+                        } else if (serialString.equals("Both pressed\r\n")){
+                            game.drop();
                         }
                     }
                 });

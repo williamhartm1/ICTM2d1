@@ -35,6 +35,9 @@ public class Startscherm extends JFrame implements ActionListener {
         if (e.getSource() == jbStart){
             game.startGame();
             dispose();
+        } else if (e.getSource() == jbRank){
+            RankingDialog ranking = new RankingDialog(this);
+            
         }
     }
 }

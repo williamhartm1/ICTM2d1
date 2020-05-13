@@ -21,6 +21,7 @@ void loop() {
   checkLeftButton();
   checkPotmeter();
   checkLdr();
+  checkBothButtons();
 }
 
 void checkRightButton(){
@@ -28,7 +29,7 @@ void checkRightButton(){
   
   if (rightState == 1){
     Serial.println("Right");
-    previous_time = millis();
+    delay(interval);
   }
 }
 
@@ -37,7 +38,7 @@ void checkLeftButton(){
 
   if (leftState == 1){
     Serial.println("Left");
-    previous_time = millis();
+    delay(interval);
   }
 }
 
@@ -61,5 +62,17 @@ void checkLdr() {
   while (ldrValue < 150) {
     ldrValue = analogRead(LDR);
     Serial.println("Pause");
+  }
+}
+
+void checkBothButtons() {
+  int leftState = digitalRead(LEFTBUTTON);
+  int rightState = digitalRead(RIGHTBUTTON);
+
+  while (leftState == 1 && rightState == 1 && millis() - previous_time > interval) {
+    leftState = digitalRead(LEFTBUTTON);
+    rightState = digitalRead(RIGHTBUTTON);
+    Serial.println("Both pressed");
+    previous_time = millis();
   }
 }
