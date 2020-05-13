@@ -1,10 +1,11 @@
 package tetris.game;
 
 public class Game {
-    private final Board board;
+    private Board board;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
+    private boolean isPaused = false;
 
     public Game() {
         board = new Board();
@@ -16,6 +17,17 @@ public class Game {
 
     public boolean isDropping() {
         return isDropping;
+    }
+
+    public boolean isPaused(){ return isPaused;}
+
+    public void setPause(boolean isPaused){
+        this.isPaused = isPaused;
+    }
+
+    public void setPause(boolean isPaused, boolean isPlaying){
+        this.isPaused = isPaused;
+        this.isPlaying = isPlaying;
     }
 
     public void startGame() {
@@ -32,6 +44,10 @@ public class Game {
         return board.getBoardWithPiece();
     }
 
+    public void removeBoardCells(){
+        board = new Board();
+    }
+
     public void moveDown() {
         if (!board.canCurrentPieceMoveDown()) {
             isDropping = false;
@@ -41,8 +57,12 @@ public class Game {
         }
     }
 
-    public void rotate() {
-        board.rotate();
+    public void rotateRight() {
+        board.rotateRight();
+    }
+
+    public void rotateLeft(){
+        board.rotateLeft();
     }
 
     public void drop() {
@@ -56,4 +76,5 @@ public class Game {
     public void moveRight() {
         board.moveRight();
     }
+
 }

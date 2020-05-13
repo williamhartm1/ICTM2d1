@@ -82,10 +82,16 @@ public class Board {
         return true;
     }
 
-    public void rotate() {
-        Block rot = currentBlock.rotate();
+    public void rotateLeft() {
+        Block rot = currentBlock.rotateLeft();
         if (fit(rot.getPoints(), 0, 0)) {
+            currentBlock = rot;
+        }
+    }
 
+    public void rotateRight(){
+        Block rot = currentBlock.rotateRight();
+        if (fit(rot.getPoints(), 0, 0)) {
             currentBlock = rot;
         }
     }
