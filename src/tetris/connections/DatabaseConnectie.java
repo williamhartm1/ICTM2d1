@@ -91,4 +91,26 @@ public class DatabaseConnectie {
                 }
             }
         }
+
+    public static String[] getHighscores() {
+        Connection con = maakconnectie();
+        String[] highscore = new String[5];
+        try {
+            int i = 0;
+            Statement stmt = con.createStatement();
+            ResultSet rs;
+            rs = stmt.executeQuery("SELECT naam,highscore from speler");
+            while (rs.next()) {
+                if (i < 5) {
+                    String gegevens = "Naam: " + rs.getString(1) + " highscore: " + rs.getString(2);
+                    highscore[i] = gegevens;
+                }
+                i++;
+            }
+            return highscore;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return highscore;
+    }
 }

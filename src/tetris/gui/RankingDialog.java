@@ -28,8 +28,11 @@ public class RankingDialog extends JDialog implements ActionListener {
         jbTerug.addActionListener(this);
 
         ResultSet r = connectie.getGegevens(0);
-        connectie.printData(r);
-
+        String[] highscores = new String[5];
+        highscores = connectie.getHighscores();
+        for(int i = 0;i < 5; i++){
+            System.out.println(highscores[i]);
+        }
 
         setVisible(true);
     }

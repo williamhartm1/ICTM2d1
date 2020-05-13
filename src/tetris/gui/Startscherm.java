@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class Startscherm extends JFrame implements ActionListener {
     Game game;
     JButton jbStart, jbRank;
+    JTextField jtNaam;
 
     public Startscherm(Game game){
         this.game = game;
@@ -18,6 +19,11 @@ public class Startscherm extends JFrame implements ActionListener {
         setTitle("Tetris menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        add(new JLabel("NAAM:"));
+
+        jtNaam = new JTextField(20);
+        add(jtNaam);
 
         jbStart = new JButton("Start spel");
         add(jbStart);
@@ -37,7 +43,10 @@ public class Startscherm extends JFrame implements ActionListener {
             dispose();
         } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
-            
         }
+    }
+
+    public String getNaam(){
+        return jtNaam.getText();
     }
 }

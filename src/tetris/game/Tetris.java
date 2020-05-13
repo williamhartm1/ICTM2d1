@@ -32,8 +32,9 @@ public class Tetris extends Canvas implements Runnable {
 
     public Tetris() {
         game = new Game();
-        gui = new Gui(game);
         startscherm = new Startscherm(game);
+        gui = new Gui(game);
+
 
         addKeyListener(keyboard);
 
