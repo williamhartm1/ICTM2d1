@@ -3,9 +3,8 @@ package tetris.game;
 public class Game {
     private Board board;
 
-    private boolean isPlaying = false;
+    private boolean playing = false;
     private boolean isDropping = false;
-    private boolean isPaused = false;
 
     public Game() {
         board = new Board();
@@ -19,19 +18,8 @@ public class Game {
         return isDropping;
     }
 
-    public boolean isPaused(){ return isPaused;}
-
-    public void setPause(boolean isPaused){
-        this.isPaused = isPaused;
-    }
-
-    public void setPause(boolean isPaused, boolean isPlaying){
-        this.isPaused = isPaused;
-        this.isPlaying = isPlaying;
-    }
-
     public void startGame() {
-        board.setCurrentBlock(Block.getRandomBlock());
+        this.playing = true;
         this.isPlaying = true;
     }
 
@@ -42,10 +30,6 @@ public class Game {
 
     public BoardCell[][] getBoardCells() {
         return board.getBoardWithPiece();
-    }
-
-    public void removeBoardCells(){
-        board = new Board();
     }
 
     public void moveDown() {
@@ -76,5 +60,4 @@ public class Game {
     public void moveRight() {
         board.moveRight();
     }
-
 }

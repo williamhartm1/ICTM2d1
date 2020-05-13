@@ -92,6 +92,7 @@ public class Board {
     public void rotateRight(){
         Block rot = currentBlock.rotateRight();
         if (fit(rot.getPoints(), 0, 0)) {
+
             currentBlock = rot;
         }
     }
