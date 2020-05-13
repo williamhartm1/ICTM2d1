@@ -23,8 +23,8 @@ public class Pauzescherm extends JDialog implements ActionListener {
         JLabel jlText = new JLabel("Spel is gepauzeerd");
         add(jlText);
 
-        JLabel jlScore = new JLabel("Huidige score is: ");
-        add(jlScore);
+        //JLabel jlScore = new JLabel("Huidige score is: ");
+        //add(jlScore);
 
         jbContinue = new JButton("Verder gaan");
         add(jbContinue);

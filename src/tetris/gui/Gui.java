@@ -30,8 +30,8 @@ public class Gui extends JFrame {
         add(statistieken, BorderLayout.CENTER);
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(Color.lightGray);
-        statistieken.add(new JLabel("SPELER: "));
-        statistieken.add(new JLabel("SCORE: "));
+        //statistieken.add(new JLabel("SPELER: "));
+        //statistieken.add(new JLabel("SCORE: "));
         statistieken.add(new JLabel("PAUZE: DEK LDR AF"));
 
         setResizable(false);
