@@ -121,4 +121,21 @@ public class Board {
             move(1, 0);
         }
     }
+    public void clearLine(){
+        int x;
+        for(x = 0;HEIGHT > x;x++){
+            boolean clearable = true;
+            for(int y = 0;WIDTH > y;y++){
+                if(board[y][x].isEmpty()){
+                    clearable = false;
+                }
+            }
+            if(clearable){
+                for(int i = 0; WIDTH > i;i++){
+                    board[i][x] = null;
+                }
+
+            }
+        }
+    }
 }
