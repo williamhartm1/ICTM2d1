@@ -55,7 +55,7 @@ public class Tetris extends Canvas implements Runnable {
                 if (pauze.getQuit()) {
                     game.setPause(false, false);
                     //canvas resetten
-                    game.removeBoardCells();
+                    //game.removeBoardCells();
                 } else {
                     game.setPause(false);
                 }

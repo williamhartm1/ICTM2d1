@@ -9,7 +9,6 @@ public class Game {
     private boolean isGameOver = false;
 
     public Game() {
-        board = new Board();
     }
 
     public boolean isPlaying() {
@@ -32,6 +31,9 @@ public class Game {
     }
 
     public void startGame() {
+        board = new Board();
+        //nieuw bord aanmaken
+        //removeBoardCells();
         board.setCurrentBlock(Block.getRandomBlock());
         this.isPlaying = true;
     }
