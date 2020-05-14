@@ -6,9 +6,9 @@ public class Game {
     private boolean isPlaying = false;
     private boolean isDropping = false;
     private boolean isPaused = false;
+    private boolean isGameOver = false;
 
     public Game() {
-        board = new Board();
     }
 
     public boolean isPlaying() {
@@ -31,8 +31,21 @@ public class Game {
     }
 
     public void startGame() {
+        board = new Board();
+        //nieuw bord aanmaken
+        //removeBoardCells();
         board.setCurrentBlock(Block.getRandomBlock());
         this.isPlaying = true;
+    }
+
+    public boolean gameOver() {
+        //if(!board.canCurrentPieceMoveDown() && blok-y == 18 (top van het speelveld)
+        if (board.isAtTop()){
+            isGameOver = true;
+        } else {
+            isGameOver = false;
+        }
+        return isGameOver;
     }
 
     //  dropping delay

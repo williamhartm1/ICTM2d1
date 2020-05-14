@@ -28,7 +28,7 @@ public class Startscherm extends JFrame implements ActionListener {
         jtNaam = new JTextField(20);
         add(jtNaam);
 
-        jrEasy = new JRadioButton("Easy");
+        jrEasy = new JRadioButton("Easy", true);
         jrEasy.addActionListener(this);
         add(jrEasy);
 
@@ -73,10 +73,6 @@ public class Startscherm extends JFrame implements ActionListener {
 
     public String getNaam(){
         return jtNaam.getText();
-    }
-
-    public boolean getIsEasy() {
-        return isEasy;
     }
 
     public boolean getIsMedium() {
