@@ -1,11 +1,13 @@
 package tetris.gui;
 
+import tetris.connections.ConnectieArduino;
 import tetris.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Startscherm extends JFrame implements ActionListener {
     Game game;
@@ -57,6 +59,17 @@ public class Startscherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbStart){
+            try {
+                ConnectieArduino.usedPort.getOutputStream().write(0);
+            } catch (IOException iOE) {
+                iOE.printStackTrace();
+            }
+            try {
+                ConnectieArduino.usedPort.getOutputStream().flush();
+            } catch (IOException iOE) {
+                iOE.printStackTrace();
+            }
+
             game.startGame();
             dispose();
         } else if (e.getSource() == jbRank){

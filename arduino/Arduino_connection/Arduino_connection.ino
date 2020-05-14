@@ -1,11 +1,11 @@
 #define LEFTBUTTON 2
 #define RIGHTBUTTON 3
+#define BUZZER 4
 #define POTMETER A0
 #define LDR A1
 
 long previous_time = millis();
 int interval = 200;
-
 static int potmeterPrevValue = map(analogRead(POTMETER), 0, 1023, 1, 4);
 
 void setup() {
@@ -14,14 +14,31 @@ void setup() {
   pinMode(LEFTBUTTON, INPUT);
   pinMode(RIGHTBUTTON, INPUT);
   pinMode(POTMETER, INPUT);
+  pinMode(BUZZER, OUTPUT);
 }
 
 void loop() {
   checkRightButton();
   checkLeftButton();
   checkPotmeter();
-  checkLdr();
+//  checkLdr();
   checkBothButtons();
+
+  if (Serial.available() > 0) {
+    byte incomingByte = Serial.read();
+      Serial.print("I received: ");
+      Serial.println(incomingByte);
+      if (incomingByte == 1) {
+          tone(BUZZER, 200);
+          delay(200);
+          noTone(BUZZER);
+          delay(200);
+          tone(BUZZER, 200);
+          delay(200);
+          noTone(BUZZER);
+          delay(200);
+      }
+  }
 }
 
 void checkRightButton(){
