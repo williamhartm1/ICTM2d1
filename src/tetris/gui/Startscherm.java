@@ -60,7 +60,7 @@ public class Startscherm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbStart){
             try {
-                ConnectieArduino.usedPort.getOutputStream().write(0);
+                ConnectieArduino.usedPort.getOutputStream().write(1);
             } catch (IOException iOE) {
                 iOE.printStackTrace();
             }
