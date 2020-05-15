@@ -126,7 +126,7 @@ public class Board {
         for(x = 0;HEIGHT > x;x++){
             boolean clearable = true;
             for(int y = 0;WIDTH > y;y++){
-                if(board[y][x].isEmpty()){
+                if(board[y][x] == null){
                     clearable = false;
                 }
             }
