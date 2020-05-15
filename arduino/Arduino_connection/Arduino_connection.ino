@@ -23,22 +23,8 @@ void loop() {
   checkPotmeter();
 //  checkLdr();
   checkBothButtons();
+  checkStateGame();
 
-  if (Serial.available() > 0) {
-    byte incomingByte = Serial.read();
-      Serial.print("I received: ");
-      Serial.println(incomingByte);
-      if (incomingByte == 1) {
-          tone(BUZZER, 200);
-          delay(200);
-          noTone(BUZZER);
-          delay(200);
-          tone(BUZZER, 200);
-          delay(200);
-          noTone(BUZZER);
-          delay(200);
-      }
-  }
 }
 
 void checkRightButton(){
@@ -91,5 +77,30 @@ void checkBothButtons() {
     rightState = digitalRead(RIGHTBUTTON);
     Serial.println("Both pressed");
     previous_time = millis();
+  }
+}
+
+void checkStateGame() {
+  if (Serial.available() > 0) {
+    byte incomingByte = Serial.read();
+    if (incomingByte == 1) {
+      tone(BUZZER, 200);
+      delay(200);
+      noTone(BUZZER);
+      delay(200);
+      tone(BUZZER, 200);
+      delay(200);
+      noTone(BUZZER);
+      delay(200);
+    } else if (incomingByte == 2) {
+      tone(BUZZER, 800);
+      delay(200);
+      noTone(BUZZER);
+      delay(200);
+      tone(BUZZER, 800);
+      delay(200);
+      noTone(BUZZER);
+      delay(200);
+    }
   }
 }
