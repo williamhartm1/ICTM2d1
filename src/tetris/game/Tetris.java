@@ -152,5 +152,6 @@ public class Tetris extends Canvas implements Runnable {
         } else if (keyboard.drop()) {
             game.drop();
         }
+        //game.clearLine();
     }
 }

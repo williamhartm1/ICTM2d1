@@ -128,10 +128,30 @@ public class Board {
             move(1, 0);
         }
     }
+<<<<<<< HEAD
 
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
+=======
+    public void clearLine(){
+        int x;
+        for(x = 0;HEIGHT > x;x++){
+            boolean clearable = true;
+            for(int y = 0;WIDTH > y;y++){
+                if(board[y][x] == null){
+                    clearable = false;
+                }
+            }
+            if(clearable){
+                for(int i = 0; WIDTH > i;i++){
+                    board[i][x] = null;
+                }
+
+            }
+        }
+    }
+>>>>>>> Pascal
 }
