@@ -6,6 +6,7 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 
 import tetris.connections.ConnectieArduino;
 
+import tetris.gui.GameOver;
 import tetris.gui.Gui;
 import tetris.gui.Pauzescherm;
 import tetris.gui.Startscherm;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 public class Tetris extends Canvas implements Runnable {
     private Game game;
     private Startscherm startscherm;
+    private GameOver gameOverScherm;
     private Gui gui;
     private long lastIteration = System.currentTimeMillis();
 
@@ -34,7 +36,6 @@ public class Tetris extends Canvas implements Runnable {
         game = new Game();
         startscherm = new Startscherm(game);
         gui = new Gui(game);
-
 
         addKeyListener(keyboard);
 
@@ -54,15 +55,26 @@ public class Tetris extends Canvas implements Runnable {
                 if (pauze.getQuit()) {
                     game.setPause(false, false);
                     //canvas resetten
-                    game.removeBoardCells();
+                    //game.removeBoardCells();
                 } else {
                     game.setPause(false);
                 }
             }
 
             if (game.isPlaying()) {
+                //speelscherm zichtbaar
                 this.gui.setVisible(true);
+                //geef naam door aan scherm
+                gui.setNaam(startscherm.getNaam());
+
                 gui.repaint();
+
+                if(game.gameOver()){
+                    gameOverScherm = new GameOver(container);
+                    if(gameOverScherm.getQuit()){
+                        game.setPause(false, false);
+                    }
+                }
 
                 // start luisteren naar events van arduino
                 connectieArduino.usedPort.addDataListener(new SerialPortDataListener() { //make java listen for arduino input
@@ -115,10 +127,18 @@ public class Tetris extends Canvas implements Runnable {
     }
 
     void tetrisLoop() {
+        //snelheid instellen easy/medium/hard
+        double delay = game.getIterationDelay();
+        if (startscherm.getIsMedium()){
+            delay = delay *0.75;
+        } else if (startscherm.getIsHard()){
+            delay = delay * 0.5;
+        }
+
         if (game.isDropping()) {
             game.moveDown();
             // per tick het blokje op y naar beneden doen
-        } else if (System.currentTimeMillis() - lastIteration >= game.getIterationDelay()) {
+        } else if (System.currentTimeMillis() - lastIteration >= delay) {
             game.moveDown();
             lastIteration = System.currentTimeMillis();
         }
@@ -132,5 +152,6 @@ public class Tetris extends Canvas implements Runnable {
         } else if (keyboard.drop()) {
             game.drop();
         }
+        //game.clearLine();
     }
 }

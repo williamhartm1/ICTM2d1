@@ -30,11 +30,15 @@ public class DatabaseConnectie {
                 System.out.println(nul.toString());
             }
         }
-        public static void maakspeler(int SpelerID,String naam){
+        public static void maakspeler(String naam){
             try {
                 con = maakconnectie();
                 Statement stmt = con.createStatement();
-                stmt.execute("INSERT INTO speler VALUES (" + SpelerID + ", '" + naam + "',0);");
+                Statement statement = con.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT max(SpelerID) as speler FROM speler");
+                rs.next();
+                int spelerID = rs.getInt(1) + 1;
+                stmt.execute("INSERT INTO speler VALUES ("  + spelerID + ", '" + naam + "',0);");
                 con.close();
             }
             catch (SQLException | NullPointerException e){
