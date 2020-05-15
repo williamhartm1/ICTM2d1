@@ -12,6 +12,9 @@ public class Gui extends JFrame {
     private final int CORNER = 5;
     private static final int BLOCK_WIDTH = 20;
 
+    private String naam;
+    private JLabel jlNaam;
+
     JPanel statistieken;
     GamePanel gamescherm;
 
@@ -30,11 +33,17 @@ public class Gui extends JFrame {
         add(statistieken, BorderLayout.CENTER);
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(Color.lightGray);
-        //statistieken.add(new JLabel("SPELER: "));
+        jlNaam = new JLabel("");
+        statistieken.add(jlNaam);
+
         //statistieken.add(new JLabel("SCORE: "));
         statistieken.add(new JLabel("PAUZE: DEK LDR AF"));
 
         setResizable(false);
+    }
+
+    public void setNaam(String naam){
+        jlNaam.setText("SPELER: " + naam);
     }
 
     public void draw(Graphics2D g) {

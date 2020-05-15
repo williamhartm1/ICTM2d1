@@ -20,12 +20,12 @@ public class RankingDialog extends JDialog implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
         setTitle("Tetris: ranking");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         add(new JLabel("RANKING: zie console"));
+
         jbTerug = new JButton("Terug naar hoofdmenu");
-        add(jbTerug);
         jbTerug.addActionListener(this);
+        add(jbTerug);
 
         ResultSet r = connectie.getGegevens(0);
         String[] highscores = new String[5];
@@ -33,8 +33,6 @@ public class RankingDialog extends JDialog implements ActionListener {
         for(int i = 0;i < 5; i++){
             System.out.println(highscores[i]);
         }
-
-        setVisible(true);
     }
 
     @Override
