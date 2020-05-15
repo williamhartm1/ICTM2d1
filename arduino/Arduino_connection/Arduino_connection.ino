@@ -21,10 +21,9 @@ void loop() {
   checkRightButton();
   checkLeftButton();
   checkPotmeter();
-//  checkLdr();
+  checkLdr();
   checkBothButtons();
   checkStateGame();
-
 }
 
 void checkRightButton(){
@@ -83,24 +82,22 @@ void checkBothButtons() {
 void checkStateGame() {
   if (Serial.available() > 0) {
     byte incomingByte = Serial.read();
+
+    // byte 1 = Start game
     if (incomingByte == 1) {
-      tone(BUZZER, 200);
-      delay(200);
-      noTone(BUZZER);
-      delay(200);
-      tone(BUZZER, 200);
-      delay(200);
-      noTone(BUZZER);
-      delay(200);
-    } else if (incomingByte == 2) {
-      tone(BUZZER, 800);
-      delay(200);
-      noTone(BUZZER);
-      delay(200);
-      tone(BUZZER, 800);
-      delay(200);
-      noTone(BUZZER);
-      delay(200);
+      Serial.println("Start game");
+      
+      for (int i = 0; i < 2; i++) {
+        tone(BUZZER, 200);
+        delay(200);
+      }
+    } else if (incomingByte == 2) { // byte 2 = game over
+      Serial.println("Game over");
+      
+      for (int i = 0; i < 2; i++) {
+        tone(BUZZER, 800);
+        delay(200);
+      }
     }
   }
 }

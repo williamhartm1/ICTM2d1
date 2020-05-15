@@ -1,9 +1,12 @@
 package tetris.gui;
 
+import tetris.connections.ConnectieArduino;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GameOver extends JDialog implements ActionListener {
     boolean terug = false;
@@ -26,6 +29,17 @@ public class GameOver extends JDialog implements ActionListener {
         JButton jbQuit = new JButton("Terug naar hoofdmenu");
         add(jbQuit);
         jbQuit.addActionListener(this);
+
+        try {
+            ConnectieArduino.usedPort.getOutputStream().write(2);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+        try {
+            ConnectieArduino.usedPort.getOutputStream().flush();
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 
         setVisible(true);
 

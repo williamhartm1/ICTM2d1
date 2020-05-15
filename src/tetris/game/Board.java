@@ -128,14 +128,12 @@ public class Board {
             move(1, 0);
         }
     }
-<<<<<<< HEAD
 
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
-=======
     public void clearLine(){
         int x;
         for(x = 0;HEIGHT > x;x++){
@@ -153,5 +151,4 @@ public class Board {
             }
         }
     }
->>>>>>> Pascal
 }
