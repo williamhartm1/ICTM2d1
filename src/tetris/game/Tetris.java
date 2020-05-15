@@ -6,6 +6,7 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 
 import tetris.connections.ConnectieArduino;
 
+import tetris.connections.DatabaseConnectie;
 import tetris.gui.GameOver;
 import tetris.gui.Gui;
 import tetris.gui.Pauzescherm;
@@ -47,32 +48,31 @@ public class Tetris extends Canvas implements Runnable {
         while (true) {
             if (!game.isPlaying()) {
                 gui.setVisible(false);
-                startscherm.setVisible(true);
+                startscherm.setVisible(true); //startscherm tonen
             }
 
             if (game.isPaused()) {
                 Pauzescherm pauze = new Pauzescherm(container, game);
                 if (pauze.getQuit()) {
-                    game.setPause(false, false);
-                    //canvas resetten
-                    //game.removeBoardCells();
+                    game.setPause(); //terug naar startscherm
                 } else {
-                    game.setPause(false);
+                    game.setPause(false); //verder spelen
                 }
             }
 
             if (game.isPlaying()) {
-                //speelscherm zichtbaar
-                this.gui.setVisible(true);
-                //geef naam door aan scherm
-                gui.setNaam(startscherm.getNaam());
+                //DatabaseConnectie.maakspeler(startscherm.getNaam()); //speler opslaan in database
+                this.gui.setVisible(true);                //speelscherm zichtbaar
+                gui.setNaam(startscherm.getNaam());     //geef naam door aan speelscherm
+                gui.setScore(game.getScore());              //geef score door aan speelscherm
 
                 gui.repaint();
 
                 if(game.gameOver()){
-                    gameOverScherm = new GameOver(container);
+                    gameOverScherm = new GameOver(container, game.getScore());
+                    DatabaseConnectie.insertspel(game.getScore(), true, true, 3); //behaalde score opslaan in database
                     if(gameOverScherm.getQuit()){
-                        game.setPause(false, false);
+                        game.setPause(); // terug naar startscherm
                     }
                 }
 
@@ -130,7 +130,7 @@ public class Tetris extends Canvas implements Runnable {
         //snelheid instellen easy/medium/hard
         double delay = game.getIterationDelay();
         if (startscherm.getIsMedium()){
-            delay = delay *0.75;
+            delay = delay * 0.75;
         } else if (startscherm.getIsHard()){
             delay = delay * 0.5;
         }

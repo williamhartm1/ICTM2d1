@@ -7,11 +7,18 @@ public class DatabaseConnectie {
         private static Connection con;
         private static boolean insert = false;
 
-        public static void insertspel(int spelID, int score, boolean alleen, boolean finishid, int SpelerID) {
+        public static void insertspel(int score, boolean alleen, boolean finishid, int SpelerID) { //nieuw 'potje' toevoegen
             try {
                 con = maakconnectie();
+                Statement state = con.createStatement();
                 Statement stmt = con.createStatement();
                 Statement statement = con.createStatement();
+
+                //volgende spelID
+                ResultSet rs = state.executeQuery("SELECT max(SpelID) as spel FROM spel");
+                rs.next();
+                int spelID = rs.getInt(1) + 1;
+
                 stmt.execute("INSERT INTO spel VALUE (" + spelID + ", "  + score + "," + alleen + "," + finishid + "," + SpelerID + ");");
                 ResultSet resultSet = statement.executeQuery("SELECT max(score) as highscore,speler.SpelerID FROM speler join spel on spel.SpelerID = speler.SpelerID " +
                         "WHERE speler.SpelerID = " + SpelerID + " ORDER BY SpelerID;");
@@ -30,7 +37,9 @@ public class DatabaseConnectie {
                 System.out.println(nul.toString());
             }
         }
-        public static void maakspeler(String naam){
+
+
+        public static void maakspeler(String naam){ //nieuwe speler aanmaken
             try {
                 con = maakconnectie();
                 Statement stmt = con.createStatement();
@@ -45,7 +54,9 @@ public class DatabaseConnectie {
                 System.out.println(e.toString());
             }
         }
-        public static ResultSet getGegevens(int spelerID){
+
+
+        public static ResultSet getGegevens(int spelerID){ //alle gegevens teruggeven
             try {
                 con = maakconnectie();
                 Statement stmt = con.createStatement();
@@ -62,7 +73,9 @@ public class DatabaseConnectie {
                 return null;
             }
         }
-        public static Connection maakconnectie(){
+
+
+        public static Connection maakconnectie(){ // connectie met database maken
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Tetris", "root", "");
                 return con;
@@ -72,7 +85,9 @@ public class DatabaseConnectie {
             }
             return null;
         }
-        public static void printData(ResultSet res){
+
+
+        public static void printData(ResultSet res){ //resultaten printen
             if (res == null) {
                 System.out.println("rs is null");
             } else {
@@ -96,7 +111,7 @@ public class DatabaseConnectie {
             }
         }
 
-    public static String[] getHighscores() {
+    public static String[] getHighscores() { // top 5 highscores voor ranking ophalen
         Connection con = maakconnectie();
         String[] highscore = new String[5];
         try {

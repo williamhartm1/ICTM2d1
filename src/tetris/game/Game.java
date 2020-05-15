@@ -3,6 +3,8 @@ package tetris.game;
 public class Game {
     private Board board;
 
+    private int score = 0;
+
     private boolean isPlaying = false;
     private boolean isDropping = false;
     private boolean isPaused = false;
@@ -11,35 +13,22 @@ public class Game {
     public Game() {
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-
-    public boolean isDropping() {
-        return isDropping;
-    }
-
-    public boolean isPaused(){ return isPaused;}
-
-    public void setPause(boolean isPaused){
+    public void setPause(boolean isPaused){ //game pauze voor pauzescherm
         this.isPaused = isPaused;
     }
 
-    public void setPause(boolean isPaused, boolean isPlaying){
-        this.isPaused = isPaused;
-        this.isPlaying = isPlaying;
+    public void setPause(){  //game terug naar startscherm vanaf dialoog
+        this.isPaused = false;
+        this.isPlaying = false;
     }
 
-    public void startGame() {
-        board = new Board();
-        //nieuw bord aanmaken
-        //removeBoardCells();
-        board.setCurrentBlock(Block.getRandomBlock());
+    public void startGame() {   //start spel
+        board = new Board();            //nieuw leeg bord aanmaken
+        board.setCurrentBlock(Block.getRandomBlock());  //eerste blok op bord
         this.isPlaying = true;
     }
 
-    public boolean gameOver() {
-        //if(!board.canCurrentPieceMoveDown() && blok-y == 18 (top van het speelveld)
+    public boolean gameOver() { //wanneer is spel afgelopen
         if (board.isAtTop()){
             isGameOver = true;
         } else {
@@ -57,17 +46,29 @@ public class Game {
         return board.getBoardWithPiece();
     }
 
-    public void removeBoardCells(){
-        board = new Board();
-    }
-
-    public void moveDown() {
-        if (!board.canCurrentPieceMoveDown()) {
+    public void moveDown() {    //vanzelf droppen van blokje
+        if (!board.canCurrentPieceMoveDown()) { //als blok niet verder kan, nieuw blok genereren en score +10
             isDropping = false;
             board.setCurrentBlock(Block.getRandomBlock());
+            score += 10;
         } else {
-            board.moveDown();
+            board.moveDown(); //anders gewoon nog n stap naar beneden droppen
         }
+    }
+
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public boolean isDropping() {
+        return isDropping;
+    }
+
+    public boolean isPaused(){ return isPaused;}
+
+    public int getScore(){
+        return score;
     }
 
     public void rotateRight() {

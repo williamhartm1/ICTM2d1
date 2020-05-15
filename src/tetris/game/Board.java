@@ -15,7 +15,8 @@ public class Board {
 
     private Block currentBlock;
 
-    public Board() {
+
+    public Board() {    //nieuw leeg bord maken
         board = createEmptyBoard();
     }
 
@@ -79,7 +80,7 @@ public class Board {
         }
     }
 
-    public boolean fit(Point[] points, int moveX, int moveY) {
+    public boolean fit(Point[] points, int moveX, int moveY) { //check of blok nog naar links/rechts/beneden kan
         for (Point point : points) {
             int x = blockCenter.x + point.x + moveX;
             int y = blockCenter.y + point.y + moveY;
@@ -96,11 +97,10 @@ public class Board {
         return true;
     }
 
-    public boolean isAtTop(){
+    public boolean isAtTop(){   //check of blok bovenaan het bord niet meer naar beneden kan, oftewel game over is
         Point[] points = currentBlock.getPoints();
         for(Point point : points){
             int y = blockCenter.y + point.y -1;
-            System.out.println(y);
             if ( y >= 18 && !canCurrentPieceMoveDown()){
                 return true;
             }
@@ -128,15 +128,13 @@ public class Board {
             move(1, 0);
         }
     }
-<<<<<<< HEAD
 
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
-=======
-    public void clearLine(){
+    public void clearLine(){    //lijn blokjes weghalen als hele rij vol zit.
         int x;
         for(x = 0;HEIGHT > x;x++){
             boolean clearable = true;
@@ -153,5 +151,4 @@ public class Board {
             }
         }
     }
->>>>>>> Pascal
 }

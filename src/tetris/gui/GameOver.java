@@ -1,15 +1,20 @@
 package tetris.gui;
 
+import tetris.connections.DatabaseConnectie;
+
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameOver extends JDialog implements ActionListener {
     boolean terug = false;
+    int score;
 
-    public GameOver(Frame frame){
+    public GameOver(Frame frame, int score){
         super(frame, true);
+        this.score = score;
 
         setSize(200, 200);
         setLocationRelativeTo(null);
@@ -20,12 +25,16 @@ public class GameOver extends JDialog implements ActionListener {
         JLabel jlText = new JLabel("Game over!");
         add(jlText);
 
-        //behaalde score
-        //is opgeslagen
+        JLabel jlScore = new JLabel("Score: " + this.score);
+        add(jlScore);
+
+        add(new JLabel("Score opgeslagen"));
 
         JButton jbQuit = new JButton("Terug naar hoofdmenu");
         add(jbQuit);
         jbQuit.addActionListener(this);
+
+        //opnieuw proberen knop
 
         setVisible(true);
 
