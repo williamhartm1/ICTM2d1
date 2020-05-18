@@ -65,6 +65,20 @@ public class Board {
         return fit(currentBlock.getPoints(), 0, -1);
     }
 
+    public void rotateLeft() {
+        Block rot = currentBlock.rotateLeft();
+        if (fit(rot.getPoints(), 0, 0)) {
+            currentBlock = rot;
+        }
+    }
+
+    public void rotateRight(){
+        Block rot = currentBlock.rotateRight();
+        if (fit(rot.getPoints(), 0, 0)) {
+            currentBlock = rot;
+        }
+    }
+
     public boolean fit(Point[] points, int moveX, int moveY) {
         for (Point point : points) {
             int x = blockCenter.x + point.x + moveX;
@@ -82,18 +96,16 @@ public class Board {
         return true;
     }
 
-    public void rotateLeft() {
-        Block rot = currentBlock.rotateLeft();
-        if (fit(rot.getPoints(), 0, 0)) {
-            currentBlock = rot;
+    public boolean isAtTop(){
+        Point[] points = currentBlock.getPoints();
+        for(Point point : points){
+            int y = blockCenter.y + point.y -1;
+            System.out.println(y);
+            if ( y >= 18 && !canCurrentPieceMoveDown()){
+                return true;
+            }
         }
-    }
-
-    public void rotateRight(){
-        Block rot = currentBlock.rotateRight();
-        if (fit(rot.getPoints(), 0, 0)) {
-            currentBlock = rot;
-        }
+        return false;
     }
 
     private void resetPieceCenter() {
@@ -103,11 +115,6 @@ public class Board {
 
     public void moveDown() {
         move(0, -1);
-    }
-
-    // Helper to current block center X and Y
-    private void move(int moveX, int moveY) {
-        blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
     public void moveLeft() {
@@ -121,6 +128,14 @@ public class Board {
             move(1, 0);
         }
     }
+<<<<<<< HEAD
+
+    // Helper to current block center X and Y
+    private void move(int moveX, int moveY) {
+        blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
+    }
+
+=======
     public void clearLine(){
         int x;
         for(x = 0;HEIGHT > x;x++){
@@ -138,4 +153,5 @@ public class Board {
             }
         }
     }
+>>>>>>> Pascal
 }
