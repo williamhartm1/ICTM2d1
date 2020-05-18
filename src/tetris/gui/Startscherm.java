@@ -1,5 +1,6 @@
 package tetris.gui;
 
+import tetris.connections.DatabaseConnectie;
 import tetris.game.Game;
 
 import javax.swing.*;
@@ -59,6 +60,9 @@ public class Startscherm extends JFrame implements ActionListener {
         if (e.getSource() == jbStart){
             game.startGame();
             dispose();
+            if(DatabaseConnectie.getSpelerID(getNaam()) == 0) {
+                DatabaseConnectie.maakspeler(getNaam()); //speler opslaan in database
+            }
         } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);

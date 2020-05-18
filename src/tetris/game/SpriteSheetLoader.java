@@ -8,7 +8,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class SpriteSheetLoader {
+<<<<<<< HEAD
+
+    BufferedImage spriteSheet = ImageIO.read(new File("C:\\Users\\leens\\Documents\\ICT\\Periode_4\\KBS\\Code_git\\ICTM2d1\\src\\tetris\\sprites\\sprites.png"));
+=======
     BufferedImage spriteSheet;
+>>>>>>> master
 
     int width;
     int height;
@@ -31,6 +36,8 @@ public class SpriteSheetLoader {
     public BufferedImage getSprite(int column) {
         return sprites[column];
     }
+
+
 }
 
 

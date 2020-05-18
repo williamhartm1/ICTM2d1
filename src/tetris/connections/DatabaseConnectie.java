@@ -38,6 +38,20 @@ public class DatabaseConnectie {
             }
         }
 
+        public static int getSpelerID(String naam){
+            int spelerID = 0;
+            try {
+                con = maakconnectie();
+                Statement stmt = con.createStatement();
+                ResultSet result = stmt.executeQuery("SELECT SpelerID FROM `speler` WHERE naam = \"" + naam + "\"");
+                result.next();
+                spelerID = result.getInt(1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return spelerID;
+        }
+
 
         public static void maakspeler(String naam){ //nieuwe speler aanmaken
             try {

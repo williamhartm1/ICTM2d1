@@ -98,6 +98,7 @@ public class Gui extends JFrame {
         g2d.drawImage(sprite, x, y, null);
     }
 
+
     private BufferedImage getBlockSprite(BlockType blockType) {
         switch (blockType) {
             case I:
@@ -114,4 +115,6 @@ public class Gui extends JFrame {
                 return sprites.getSprite(5);
         }
     }
+
+
 }

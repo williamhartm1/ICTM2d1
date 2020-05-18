@@ -1,7 +1,7 @@
 package tetris.game;
 
 public class Game {
-    private Board board;
+    protected Board board;
 
     private int score = 0;
 
@@ -71,16 +71,19 @@ public class Game {
         return score;
     }
 
+    public void drop() {
+        isDropping = true;
+    }
+
+    public void clearLine(){board.clearLine();}
+/*
+
     public void rotateRight() {
         board.rotateRight();
     }
 
     public void rotateLeft(){
         board.rotateLeft();
-    }
-
-    public void drop() {
-        isDropping = true;
     }
 
     public void moveLeft() {
@@ -91,6 +94,6 @@ public class Game {
         board.moveRight();
     }
 
-    public void clearLine(){board.clearLine();}
+ */
 
 }

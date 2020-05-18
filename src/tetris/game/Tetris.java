@@ -29,7 +29,7 @@ public class Tetris extends Canvas implements Runnable {
 
     private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
-    //private SpriteSheetLoader sprites;
+    private SpriteSheetLoader sprites;
 
     JFrame container;
 
@@ -41,7 +41,7 @@ public class Tetris extends Canvas implements Runnable {
 
         addKeyListener(keyboard);
 
-        //sprites = new SpriteSheetLoader(20, 20,  6);
+        sprites = new SpriteSheetLoader(20, 20,  6);
     }
 
     // gameLoop blijft status game checken
@@ -62,7 +62,6 @@ public class Tetris extends Canvas implements Runnable {
             }
 
             if (game.isPlaying()) {
-                //DatabaseConnectie.maakspeler(startscherm.getNaam()); //speler opslaan in database
                 this.gui.setVisible(true);                //speelscherm zichtbaar
                 gui.setNaam(startscherm.getNaam());     //geef naam door aan speelscherm
                 gui.setScore(game.getScore());              //geef score door aan speelscherm
@@ -71,7 +70,8 @@ public class Tetris extends Canvas implements Runnable {
 
                 if(game.gameOver()){
                     gameOverScherm = new GameOver(container, game.getScore());
-                    DatabaseConnectie.insertspel(game.getScore(), true, true, 3); //behaalde score opslaan in database
+                    int spelerID = DatabaseConnectie.getSpelerID(startscherm.getNaam());
+                    DatabaseConnectie.insertspel(game.getScore(), true, true, spelerID); //behaalde score opslaan in database
                     if(gameOverScherm.getQuit()){
                         game.setPause(); // terug naar startscherm
                     }
@@ -103,15 +103,15 @@ public class Tetris extends Canvas implements Runnable {
 
                         System.out.print(serialString);
                         if (serialString.equals("Left\r\n")) {
-                            game.moveLeft();
+                            game.board.moveLeft();
                         } else if (serialString.equals("Right\r\n")) {
-                            game.moveRight();
+                            game.board.moveRight();
                         } else if (serialString.equals("Pause\r\n")) {
                             game.setPause(true);
                         } else if (serialString.equals("Rotate right\r\n")) {
-                            game.rotateRight();
+                            game.board.rotateRight();
                         } else if (serialString.equals("Rotate left\r\n")) {
-                            game.rotateLeft();
+                            game.board.rotateLeft();
                         } else if (serialString.equals("Both pressed\r\n")){
                             game.drop();
                         }
@@ -145,11 +145,11 @@ public class Tetris extends Canvas implements Runnable {
         }
 
         if (keyboard.rotate()) {
-            game.rotateLeft();
+            game.board.rotateLeft();
         } else if (keyboard.left()) {
-            game.moveLeft();
+            game.board.moveLeft();
         } else if (keyboard.right()) {
-            game.moveRight();
+            game.board.moveRight();
         } else if (keyboard.drop()) {
             game.drop();
         }
