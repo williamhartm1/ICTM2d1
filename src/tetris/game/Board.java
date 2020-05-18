@@ -135,20 +135,26 @@ public class Board {
     }
 
     public void clearLine(){    //lijn blokjes weghalen als hele rij vol zit.
-        int x;
-        for(x = 0;HEIGHT > x;x++){
-            boolean clearable = true;
-            for(int y = 0;WIDTH > y;y++){
-                if(board[y][x] == null){
-                    clearable = false;
+        try {
+            int x;
+            for (x = 0; HEIGHT > x; x++) {
+                boolean clearable = true;
+                for (int y = 0; WIDTH > y; y++) {
+                    if (board[y][x] == null) {
+                        clearable = false;
+                    }
                 }
-            }
-            if(clearable){
-                for(int i = 0; WIDTH > i;i++){
-                    board[i][x] = null;
-                }
+                if (clearable) {
+                    for (int i = 0; WIDTH > i; i++) {
+                        board[i][x] = null;
+                    }
 
+                }
             }
+        } catch(Exception e){
+            System.out.println(e.toString());
+            System.out.println("");
+            e.printStackTrace();
         }
     }
 }

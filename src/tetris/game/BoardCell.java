@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BoardCell {
     private final BlockType blockType;
 
-    private BoardCell() {
+    public BoardCell() {
         blockType = null;
     }
 
