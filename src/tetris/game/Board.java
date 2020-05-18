@@ -148,8 +148,10 @@ public class Board {
                 if (clearable) {
                     BoardCell[] emptyline = newBoard[x];
                     for(int workline = x;workline > 0;workline--){
-                        newBoard[workline] = newBoard[workline -1];
-
+                        int newline = x - 1;
+                        if(newline != -1) {
+                            newBoard[workline] = newBoard[workline - 1];
+                        }
                     }
                     newBoard[0] = emptyline;
                 }
