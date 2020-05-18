@@ -1,3 +1,4 @@
+import tetris.TetrisConfig;
 import tetris.connections.DatabaseConnectie;
 import tetris.game.Tetris;
 
@@ -10,5 +11,6 @@ public class TetrisMain {
         Thread tetrisThread = new Thread(tetris, "tetris Thread");
 
         tetrisThread.start();
+        TetrisConfig test = new TetrisConfig();
     }
 }

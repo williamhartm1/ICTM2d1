@@ -1,12 +1,15 @@
 package tetris.game;
 
+import com.sun.security.auth.login.ConfigFile;
+import tetris.TetrisConfig;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class SpriteSheetLoader {
-    BufferedImage spriteSheet = ImageIO.read(new File("src/tetris/game/sprites.png"));
+    BufferedImage spriteSheet;
 
     int width;
     int height;
@@ -14,6 +17,8 @@ public class SpriteSheetLoader {
     BufferedImage[] sprites;
 
     public SpriteSheetLoader(int width, int height, int columns) throws IOException {
+        TetrisConfig config = new TetrisConfig();
+        spriteSheet = ImageIO.read(new File(config.getVariable("app.sprites")));
         this.width = width;
         this.height = height;
         this.columns = columns;
