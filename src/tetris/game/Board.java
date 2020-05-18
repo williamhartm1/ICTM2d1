@@ -72,7 +72,7 @@ public class Board {
         }
     }
 
-    public void rotateRight(){
+    public void rotateRight() {
         Block rot = currentBlock.rotateRight();
         if (fit(rot.getPoints(), 0, 0)) {
             currentBlock = rot;
@@ -96,12 +96,12 @@ public class Board {
         return true;
     }
 
-    public boolean isAtTop(){
+    public boolean isAtTop() {
         Point[] points = currentBlock.getPoints();
-        for(Point point : points){
-            int y = blockCenter.y + point.y -1;
+        for (Point point : points) {
+            int y = blockCenter.y + point.y - 1;
             System.out.println(y);
-            if ( y >= 18 && !canCurrentPieceMoveDown()){
+            if (y >= 18 && !canCurrentPieceMoveDown()) {
                 return true;
             }
         }
@@ -119,7 +119,7 @@ public class Board {
 
     public void moveLeft() {
         if (fit(currentBlock.getPoints(), -1, 0)) {
-            move( -1, 0);
+            move(-1, 0);
         }
     }
 
@@ -128,30 +128,34 @@ public class Board {
             move(1, 0);
         }
     }
-<<<<<<< HEAD
 
     // Helper to current block center X and Y
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
-=======
-    public void clearLine(){
-        int x;
-        for(x = 0;HEIGHT > x;x++){
-            boolean clearable = true;
-            for(int y = 0;WIDTH > y;y++){
-                if(board[y][x] == null){
-                    clearable = false;
+    public void clearLine() {
+        try {
+            int x;
+            for (x = 0; HEIGHT > x; x++) {
+                boolean clearable = true;
+                for (int y = 0; WIDTH > y; y++) {
+                    if (board[y][x] == null) {
+                        clearable = false;
+                    }
+                }
+                if (clearable) {
+                    for (int i = 0; WIDTH > i; i++) {
+                        board[i][x] = null;
+                    }
+
                 }
             }
-            if(clearable){
-                for(int i = 0; WIDTH > i;i++){
-                    board[i][x] = null;
-                }
-
+        }
+        catch(NullPointerException ne){
+            ne.printStackTrace();
+            System.out.println("");
+            System.out.println(ne.toString());
             }
         }
     }
->>>>>>> Pascal
-}
