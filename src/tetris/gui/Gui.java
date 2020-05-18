@@ -1,11 +1,14 @@
 package tetris.gui;
 
+import tetris.game.BlockType;
 import tetris.game.BoardCell;
 import tetris.game.Game;
+import tetris.game.SpriteSheetLoader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Gui extends JFrame {
     private Game game;
@@ -14,10 +17,12 @@ public class Gui extends JFrame {
 
     private JLabel jlNaam, jlScore;
 
+    private SpriteSheetLoader sprites;
+
     JPanel statistieken;
     GamePanel gamescherm;
 
-    public Gui(Game game){
+    public Gui(Game game) throws IOException {
         this.game = game;
         setSize(420, 450);
         setLayout(new BorderLayout());
@@ -32,6 +37,8 @@ public class Gui extends JFrame {
         add(statistieken, BorderLayout.CENTER);
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(Color.lightGray);
+
+        sprites = new SpriteSheetLoader(20, 20,  6);
 
         jlNaam = new JLabel("");
         statistieken.add(jlNaam);
@@ -67,7 +74,7 @@ public class Gui extends JFrame {
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
                 } else {
-                    //drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
                 }
             }
         }
@@ -89,5 +96,22 @@ public class Gui extends JFrame {
     public void drawBlock(Graphics g, int x, int y, BufferedImage sprite) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, x, y, null);
+    }
+
+    private BufferedImage getBlockSprite(BlockType blockType) {
+        switch (blockType) {
+            case I:
+                return sprites.getSprite(0);
+            case J:
+                return sprites.getSprite(1);
+            case L:
+                return sprites.getSprite(2);
+            case O:
+                return sprites.getSprite(3);
+            case S:
+                return sprites.getSprite(4);
+            default:
+                return sprites.getSprite(5);
+        }
     }
 }

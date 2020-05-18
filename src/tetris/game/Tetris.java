@@ -15,6 +15,7 @@ import tetris.input.KeyboardInput;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class Tetris extends Canvas implements Runnable {
@@ -33,7 +34,7 @@ public class Tetris extends Canvas implements Runnable {
     JFrame container;
 
 
-    public Tetris() {
+    public Tetris() throws IOException {
         game = new Game();
         startscherm = new Startscherm(game);
         gui = new Gui(game);
