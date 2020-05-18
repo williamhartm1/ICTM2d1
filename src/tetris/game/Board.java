@@ -135,6 +135,7 @@ public class Board {
     }
 
     public void clearLine() {
+        BoardCell[][] newBoard = createEmptyBoard();
         try {
             int x;
             for (x = 0; HEIGHT > x; x++) {
@@ -145,12 +146,19 @@ public class Board {
                     }
                 }
                 if (clearable) {
-                    for (int i = 0; WIDTH > i; i++) {
-                        board[i][x] = null;
-                    }
+                    BoardCell[] emptyline = newBoard[x];
+                    for(int workline = x;workline > 0;workline--){
+                        newBoard[workline] = newBoard[workline -1];
 
+                    }
+                    newBoard[0] = emptyline;
+                }
+                else{
+                    for(int m = 0;m < WIDTH;m++)
+                    newBoard[m][x] = board[m][x];
                 }
             }
+            board = newBoard;
         }
         catch(NullPointerException ne){
             ne.printStackTrace();
