@@ -1,6 +1,5 @@
 package tetris.game;
 
-import com.sun.security.auth.login.ConfigFile;
 import tetris.TetrisConfig;
 
 import javax.imageio.ImageIO;
