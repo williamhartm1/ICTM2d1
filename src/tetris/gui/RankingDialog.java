@@ -10,11 +10,9 @@ import java.sql.ResultSet;
 
 public class RankingDialog extends JDialog implements ActionListener {
     JButton jbTerug;
-    DatabaseConnectie connectie;
 
     public RankingDialog(Frame frame){
         super(frame, true);
-        connectie = new DatabaseConnectie();
 
         setSize(300, 300);
         setLocationRelativeTo(null);
@@ -22,9 +20,8 @@ public class RankingDialog extends JDialog implements ActionListener {
         setTitle("Tetris: ranking");
 
 
-        ResultSet r = connectie.getGegevens(0);
-        String[] highscores = new String[5];
-        highscores = connectie.getHighscores();
+        String[] highscores;
+        highscores = DatabaseConnectie.getHighscores();
         for(int i = 0;i < 5; i++){
             add(new JLabel(highscores[i]));
         }

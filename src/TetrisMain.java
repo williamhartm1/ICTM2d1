@@ -11,6 +11,6 @@ public class TetrisMain {
         Thread tetrisThread = new Thread(tetris, "tetris Thread");
 
         tetrisThread.start();
-        TetrisConfig test = new TetrisConfig();
+        //TetrisConfig test = new TetrisConfig();
     }
 }

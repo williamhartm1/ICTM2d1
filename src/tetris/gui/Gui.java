@@ -38,7 +38,7 @@ public class Gui extends JFrame {
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(Color.lightGray);
 
-        sprites = new SpriteSheetLoader(20, 20,  6);
+        //sprites = new SpriteSheetLoader(20, 20,  6);
 
         jlNaam = new JLabel("");
         statistieken.add(jlNaam);
@@ -74,7 +74,7 @@ public class Gui extends JFrame {
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
                 } else {
-                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                    //drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
                 }
             }
         }
@@ -97,7 +97,7 @@ public class Gui extends JFrame {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, x, y, null);
     }
-
+/*
 
     private BufferedImage getBlockSprite(BlockType blockType) {
         switch (blockType) {
@@ -115,6 +115,8 @@ public class Gui extends JFrame {
                 return sprites.getSprite(5);
         }
     }
+
+ */
 
 
 }

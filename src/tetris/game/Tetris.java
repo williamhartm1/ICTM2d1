@@ -29,7 +29,7 @@ public class Tetris extends Canvas implements Runnable {
 
     private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
-    private SpriteSheetLoader sprites;
+    //private SpriteSheetLoader sprites;
 
     JFrame container;
 
@@ -41,7 +41,7 @@ public class Tetris extends Canvas implements Runnable {
 
         addKeyListener(keyboard);
 
-        sprites = new SpriteSheetLoader(20, 20,  6);
+        //sprites = new SpriteSheetLoader(20, 20,  6);
     }
 
     // gameLoop blijft status game checken
@@ -70,7 +70,9 @@ public class Tetris extends Canvas implements Runnable {
 
                 if(game.gameOver()){
                     gameOverScherm = new GameOver(container, game.getScore());
-                    int spelerID = DatabaseConnectie.getSpelerID(startscherm.getNaam());
+                    DatabaseConnectie.maakspeler(startscherm.getNaam()); //speler opslaan in database
+
+                    int spelerID = DatabaseConnectie.getSpelerID(startscherm.getNaam()); //spelerID bij speler ophalen
                     DatabaseConnectie.insertspel(game.getScore(), true, true, spelerID); //behaalde score opslaan in database
                     if(gameOverScherm.getQuit()){
                         game.setPause(); // terug naar startscherm
@@ -153,6 +155,6 @@ public class Tetris extends Canvas implements Runnable {
         } else if (keyboard.drop()) {
             game.drop();
         }
-        //game.clearLine();
+        //game.board.clearLine();
     }
 }

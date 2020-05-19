@@ -75,25 +75,4 @@ public class Game {
         isDropping = true;
     }
 
-    public void clearLine(){board.clearLine();}
-/*
-
-    public void rotateRight() {
-        board.rotateRight();
-    }
-
-    public void rotateLeft(){
-        board.rotateLeft();
-    }
-
-    public void moveLeft() {
-        board.moveLeft();
-    }
-
-    public void moveRight() {
-        board.moveRight();
-    }
-
- */
-
 }

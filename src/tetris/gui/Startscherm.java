@@ -12,6 +12,7 @@ public class Startscherm extends JFrame implements ActionListener {
     Game game;
     JButton jbStart, jbRank;
     JTextField jtNaam;
+    JLabel melding;
     JRadioButton jrEasy, jrMedium, jrHard;
     ButtonGroup group;
     boolean isEasy, isMedium, isHard;
@@ -23,6 +24,9 @@ public class Startscherm extends JFrame implements ActionListener {
         setTitle("Tetris hoofdmenu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        melding = new JLabel("");
+        add(melding);
 
         add(new JLabel("Naam:"));
 
@@ -57,13 +61,13 @@ public class Startscherm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jbStart){
+        if (e.getSource() == jbStart && !jtNaam.getText().equals("")){
             game.startGame();
             dispose();
-            if(DatabaseConnectie.getSpelerID(getNaam()) == 0) {
-                DatabaseConnectie.maakspeler(getNaam()); //speler opslaan in database
-            }
-        } else if (e.getSource() == jbRank){
+        } else {
+            melding.setText("Naam moet worden ingevuld");
+        }
+            if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);
         } else if (e.getSource() == jrEasy) {
