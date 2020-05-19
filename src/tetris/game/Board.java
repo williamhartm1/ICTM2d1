@@ -136,33 +136,39 @@ public class Board {
 
     public void clearLine() {
         BoardCell[][] newBoard = createEmptyBoard();
+        BoardCell[] line = BoardCell.getEmptyArray(HEIGHT);
         try {
-            int x;
-            for (x = 0; HEIGHT > x; x++) {
+            int y;
+            for (y = 0; HEIGHT > y; y++) {
                 boolean clearable = true;
-                for (int y = 0; WIDTH > y; y++) {
-                    if (board[y][x] == null) {
+                for (int x = 0; WIDTH > x; x++) {
+                    if (board[x][y] == null) {
                         clearable = false;
                     }
                 }
                 if (clearable) {
-                    BoardCell[] emptyline = newBoard[x];
-                    for(int workline = x;workline > 0;workline--){
-                        int newline = x - 1;
+                    System.out.println("ik ben clearable");
+                    for(int workline = y;workline > 0;workline--){
+                        int newline = y - 1;
                         if(newline != -1) {
-                            newBoard[workline] = newBoard[workline - 1];
+                            for(int x = 0; x < WIDTH;x++)
+                            newBoard[x][newline] = newBoard[x][newline];
+                        }
+                        else{
+                            for(int x = 0;x < WIDTH;x++) {
+                                newBoard[x][workline] = board[x][workline];
+                            }
                         }
                     }
-                    newBoard[0] = emptyline;
                 }
                 else{
                     for(int m = 0;m < WIDTH;m++)
-                    newBoard[m][x] = board[m][x];
+                    newBoard[m][y] = board[m][y];
                 }
             }
             board = newBoard;
         }
-        catch(NullPointerException ne){
+        catch(Exception ne){
             ne.printStackTrace();
             System.out.println("");
             System.out.println(ne.toString());
