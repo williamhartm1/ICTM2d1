@@ -137,12 +137,13 @@ public class Board {
     public void clearLine() {
         System.out.println("ik ben de clearline functie");
         BoardCell[][] newBoard = createEmptyBoard();
+        BoardCell[] emptycel = BoardCell.getEmptyArray(1);
         try {
             int y;
             for (y = 0; HEIGHT > y; y++) {
                 boolean clearable = true;
                 for (int x = 0; WIDTH > x; x++) {
-                    if (board[x][y] == null) {
+                    if (board[x][y] == emptycel[0]) {
                         clearable = false;
                     }
                 }
