@@ -100,7 +100,7 @@ public class Board {
         Point[] points = currentBlock.getPoints();
         for (Point point : points) {
             int y = blockCenter.y + point.y - 1;
-            System.out.println(y);
+            //System.out.println(y);
             if (y >= 18 && !canCurrentPieceMoveDown()) {
                 return true;
             }
@@ -161,10 +161,12 @@ public class Board {
                     }
                 }
                 else{
+                    System.out.println("ik ben niet clearable");
                     for(int m = 0;m < WIDTH;m++)
                     newBoard[m][y] = board[m][y];
                 }
             }
+            System.out.println("ik vervang het bord");
             board = newBoard;
         }
         catch(Exception ne){
