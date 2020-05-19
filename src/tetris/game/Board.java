@@ -136,7 +136,6 @@ public class Board {
 
     public void clearLine() {
         BoardCell[][] newBoard = createEmptyBoard();
-        BoardCell[] line = BoardCell.getEmptyArray(HEIGHT);
         try {
             int y;
             for (y = 0; HEIGHT > y; y++) {
