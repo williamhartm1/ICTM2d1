@@ -1,12 +1,14 @@
 package tetris.gui;
 
 import tetris.connections.DatabaseConnectie;
+import tetris.connections.ConnectieArduino;
 import tetris.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Startscherm extends JFrame implements ActionListener {
     Game game;
@@ -62,13 +64,8 @@ public class Startscherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbStart){
-            if (jtNaam.getText().equals("")){
-                melding.setText("Naam moet worden ingevuld");
-            } else {
-                game.startGame();
-                melding.setText("");
-                dispose();
-            }
+            game.startGame();
+            dispose();
         } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);
