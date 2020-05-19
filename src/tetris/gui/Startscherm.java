@@ -61,13 +61,15 @@ public class Startscherm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jbStart && !jtNaam.getText().equals("")){
-            game.startGame();
-            dispose();
-        } else {
-            melding.setText("Naam moet worden ingevuld");
-        }
-            if (e.getSource() == jbRank){
+        if (e.getSource() == jbStart){
+            if (jtNaam.getText().equals("")){
+                melding.setText("Naam moet worden ingevuld");
+            } else {
+                game.startGame();
+                melding.setText("");
+                dispose();
+            }
+        } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);
         } else if (e.getSource() == jrEasy) {

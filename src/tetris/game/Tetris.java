@@ -50,6 +50,7 @@ public class Tetris extends Canvas implements Runnable {
             if (!game.isPlaying()) {
                 gui.setVisible(false);
                 startscherm.setVisible(true); //startscherm tonen
+                game.resetScore(); //score resetten op 0
             }
 
             if (game.isPaused()) {
@@ -70,6 +71,7 @@ public class Tetris extends Canvas implements Runnable {
 
                 if(game.gameOver()){
                     gameOverScherm = new GameOver(container, game.getScore());
+
                     DatabaseConnectie.maakspeler(startscherm.getNaam()); //speler opslaan in database
 
                     int spelerID = DatabaseConnectie.getSpelerID(startscherm.getNaam()); //spelerID bij speler ophalen

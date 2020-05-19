@@ -57,17 +57,18 @@ public class DatabaseConnectie {
             try {
                 con = maakconnectie();
                 Statement stmt = con.createStatement();
-                
-                //opvolgende spelerID ophalen voor nieuwe speler
-                ResultSet rs = stmt.executeQuery("SELECT max(SpelerID) as speler FROM speler");
-                rs.next();
-                int spelerID = rs.getInt(1) + 1;
 
-                //speler opslaan in database
-                stmt.execute("INSERT INTO speler VALUES (" + spelerID + ", '" + naam + "',0);");
-                con.close();
+                if (getSpelerID(naam) == 0) { //als speler nog niet bestaat
 
+                    //opvolgende spelerID ophalen voor nieuwe speler
+                    ResultSet rs = stmt.executeQuery("SELECT max(SpelerID) as speler FROM speler");
+                    rs.next();
+                    int newSpelerID = rs.getInt(1) + 1;
 
+                    //speler opslaan in database
+                    stmt.execute("INSERT INTO speler VALUES (" + newSpelerID + ", '" + naam + "',0);");
+                    con.close();
+                }
             }
             catch (SQLException | NullPointerException e){
                 System.out.println(e.toString());

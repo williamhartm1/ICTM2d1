@@ -75,4 +75,8 @@ public class Game {
         isDropping = true;
     }
 
+    public void resetScore(){
+        score = 0;
+    }
+
 }
