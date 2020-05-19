@@ -1,5 +1,12 @@
 package tetris.game;
 
+/*
+De toestand van het spel bepalen, oftewel of het spel op pauze staat, game over is, bezig is;
+Bepalen of blokje nog naar beneden kan;
+Snelheid bepalen;
+Score bijhouden;
+ */
+
 public class Game {
     protected Board board;
 
@@ -13,22 +20,26 @@ public class Game {
     public Game() {
     }
 
-    public void setPause(boolean isPaused){ //game pauze voor pauzescherm
+    //game pauze voor pauzescherm
+    public void setPause(boolean isPaused){
         this.isPaused = isPaused;
     }
 
-    public void setPause(){  //game terug naar startscherm vanaf dialoog
+    //game terug naar startscherm vanaf dialoog
+    public void setPause(){
         this.isPaused = false;
         this.isPlaying = false;
     }
 
-    public void startGame() {   //start spel
+    //start spel
+    public void startGame() {
         board = new Board();            //nieuw leeg bord aanmaken
         board.setCurrentBlock(Block.getRandomBlock());  //eerste blok op bord
         this.isPlaying = true;
     }
 
-    public boolean gameOver() { //wanneer is spel afgelopen
+    //wanneer is spel afgelopen
+    public boolean gameOver() {
         if (board.isAtTop()){
             isGameOver = true;
         } else {
@@ -46,7 +57,8 @@ public class Game {
         return board.getBoardWithPiece();
     }
 
-    public void moveDown() {    //vanzelf droppen van blokje
+    //vanzelf droppen van blokje
+    public void moveDown() {
         if (!board.canCurrentPieceMoveDown()) { //als blok niet verder kan, nieuw blok genereren en score +10
             isDropping = false;
             board.setCurrentBlock(Block.getRandomBlock());

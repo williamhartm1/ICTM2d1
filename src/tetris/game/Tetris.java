@@ -1,5 +1,10 @@
 package tetris.game;
 
+/*
+Algemene spelverloop van tetris.
+Gui en game worden aangestuurd, connectie met Arduino en database worden gebruikt.
+ */
+
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
@@ -47,21 +52,24 @@ public class Tetris extends Canvas implements Runnable {
     // gameLoop blijft status game checken
     public void run() {
         while (true) {
+            //als het spel niet bezig is
             if (!game.isPlaying()) {
                 gui.setVisible(false);
                 startscherm.setVisible(true); //startscherm tonen
                 game.resetScore(); //score resetten op 0
             }
 
+            //als het spel is gepauzeerd (door LDR te bedekken)
             if (game.isPaused()) {
-                Pauzescherm pauze = new Pauzescherm(container, game);
-                if (pauze.getQuit()) {
+                Pauzescherm pauze = new Pauzescherm(container, game); //toon pauzescherm
+                if (pauze.getQuit()) { //als op terug is geklikt in het scherm
                     game.setPause(); //terug naar startscherm
                 } else {
                     game.setPause(false); //verder spelen
                 }
             }
 
+            //als het spel bezig is
             if (game.isPlaying()) {
                 this.gui.setVisible(true);                //speelscherm zichtbaar
                 gui.setNaam(startscherm.getNaam());     //geef naam door aan speelscherm
@@ -69,14 +77,28 @@ public class Tetris extends Canvas implements Runnable {
 
                 gui.repaint();
 
+                //als de speler game-over is
                 if(game.gameOver()){
-                    gameOverScherm = new GameOver(container, game.getScore());
+                    //geluid game over via Arduino
+                    try {
+                        ConnectieArduino.usedPort.getOutputStream().write(2);
+                    } catch (IOException iOE) {
+                        iOE.printStackTrace();
+                    }
+                    try {
+                        ConnectieArduino.usedPort.getOutputStream().flush();
+                    } catch (IOException iOE) {
+                        iOE.printStackTrace();
+                    }
+
+                    gameOverScherm = new GameOver(container, game.getScore()); //scherm tonen
 
                     DatabaseConnectie.maakspeler(startscherm.getNaam()); //speler opslaan in database
 
                     int spelerID = DatabaseConnectie.getSpelerID(startscherm.getNaam()); //spelerID bij speler ophalen
                     DatabaseConnectie.insertspel(game.getScore(), true, true, spelerID); //behaalde score opslaan in database
-                    if(gameOverScherm.getQuit()){
+
+                    if(gameOverScherm.getQuit()){ //als terug is geklikt op scherm
                         game.setPause(); // terug naar startscherm
                     }
                 }
@@ -105,6 +127,7 @@ public class Tetris extends Canvas implements Runnable {
                             serialString += stringBuffer;
                         }
 
+                        //aansturen board blokjes dmv de printlines van de Arduino
                         System.out.print(serialString);
                         if (serialString.equals("Left\r\n")) {
                             game.board.moveLeft();
@@ -157,6 +180,8 @@ public class Tetris extends Canvas implements Runnable {
         } else if (keyboard.drop()) {
             game.drop();
         }
-        //game.board.clearLine();
+
+        //controleren of een hele rij vol is, om deze leeg te maken
+        game.board.clearLine();
     }
 }

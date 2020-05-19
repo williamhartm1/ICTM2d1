@@ -1,5 +1,9 @@
 package tetris.gui;
 
+/*
+Panel dat het bord en de blokjes tekent, en de spelstatistieken ernaast toont
+ */
+
 import tetris.game.BlockType;
 import tetris.game.BoardCell;
 import tetris.game.Game;
@@ -30,11 +34,13 @@ public class Gui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //scherm met bord en blokjes
         gamescherm = new GamePanel(this);
-        add(gamescherm, BorderLayout.WEST);
+        add(gamescherm, BorderLayout.WEST); //links plaatsen
 
+        //stastieken (naam, score) van het spel
         statistieken = new JPanel();
-        add(statistieken, BorderLayout.CENTER);
+        add(statistieken, BorderLayout.CENTER); //midden naast de andere panel
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(Color.lightGray);
 
@@ -51,15 +57,18 @@ public class Gui extends JFrame {
         setResizable(false);
     }
 
+    //naam aanpassen naar wat op startscherm is ingevuld
     public void setNaam(String naam){   //naam vanuit startscherm instellen
         jlNaam.setText("SPELER: " + naam);
     }
 
+    //score aanpassen naar huidige score bijgehouden in board.java
     public void setScore(int score){    //score vanuit game instellen
         jlScore.setText("SCORE: " + score);
     }
 
-    public void draw(Graphics2D g) {    //teken graphics
+    //teken graphics
+    public void draw(Graphics2D g) {
         drawEmptyBoard(g);
         drawCells(g);
     }
@@ -99,6 +108,7 @@ public class Gui extends JFrame {
     }
 /*
 
+    //sprites per blokje tekenen
     private BufferedImage getBlockSprite(BlockType blockType) {
         switch (blockType) {
             case I:

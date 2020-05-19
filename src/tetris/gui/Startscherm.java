@@ -1,5 +1,13 @@
 package tetris.gui;
 
+/*
+Startscherm van de game.
+Optie voor kiezen moeilijkheid, standaard 'easy';
+Textveld voor naam, moet worden ingevuld;
+Ranking knop om de highscores in een apart scherm te tonen;
+Start knop, naam moet worden ingevuld, met geluid over Arduino als deze is aangeklikt;
+ */
+
 import tetris.connections.DatabaseConnectie;
 import tetris.connections.ConnectieArduino;
 import tetris.game.Game;
@@ -64,8 +72,28 @@ public class Startscherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbStart){
-            game.startGame();
-            dispose();
+            if (jtNaam.getText().equals("")){
+                melding.setText("Naam moet worden ingevuld");      //melding als naam niet is ingevuld
+
+            } else { //spel starten in game
+                game.startGame();
+
+                //communicatie naar Arduino voor geluid
+                try {
+                    ConnectieArduino.usedPort.getOutputStream().write(1);
+                } catch (IOException iOE) {
+                    iOE.printStackTrace();
+                }
+                try {
+                    ConnectieArduino.usedPort.getOutputStream().flush();
+                } catch (IOException iOE) {
+                    iOE.printStackTrace();
+                }
+
+                melding.setText("");
+                dispose(); //dit scherm weghalen
+            }
+
         } else if (e.getSource() == jbRank){
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);

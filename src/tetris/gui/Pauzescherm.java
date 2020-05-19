@@ -1,4 +1,8 @@
 package tetris.gui;
+/*
+Pauzescherm als het spel is gepauzeerd.
+Toont huidige score, knoppen voor doorgaan met spel of spel afsluiten.
+ */
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +12,10 @@ import tetris.game.Game;
 
 public class Pauzescherm extends JDialog implements ActionListener {
     private JButton jbContinue, jbQuit;
-    private Game game;
     boolean quit = false;
 
     public Pauzescherm(Frame frame, Game game){
         super(frame, true);
-        this.game = game;
         setSize(200, 200);
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
@@ -23,7 +25,7 @@ public class Pauzescherm extends JDialog implements ActionListener {
         JLabel jlText = new JLabel("Spel is gepauzeerd");
         add(jlText);
 
-        JLabel jlScore = new JLabel("Huidige score is: " + game.getScore());
+        JLabel jlScore = new JLabel("Huidige score is: " + game.getScore()); //toont huidige score voor pauzeren
         add(jlScore);
 
         jbContinue = new JButton("Verder gaan");

@@ -1,15 +1,14 @@
 package tetris.gui;
 
-import tetris.connections.DatabaseConnectie;
-
-import tetris.connections.ConnectieArduino;
+/*
+Scherm als de speler game over is
+knoppen voor terug naar hoofdmenu en opnieuw proberen
+ */
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class GameOver extends JDialog implements ActionListener {
     boolean terug = false;
@@ -36,6 +35,8 @@ public class GameOver extends JDialog implements ActionListener {
         JButton jbQuit = new JButton("Terug naar hoofdmenu");
         add(jbQuit);
         jbQuit.addActionListener(this);
+
+        //nog toevoegen: opnieuw proberen
 
         setVisible(true);
 

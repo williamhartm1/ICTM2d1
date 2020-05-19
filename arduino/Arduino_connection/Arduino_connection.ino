@@ -21,7 +21,7 @@ void loop() {
   checkRightButton();
   checkLeftButton();
   checkPotmeter();
-//  checkLdr();
+  checkLdr();
   checkBothButtons();
   checkStateGame();
 }

@@ -1,12 +1,16 @@
 package tetris.gui;
 
+/*
+Laat de top 5 highscores zien. Terugknop naar hoofdmenu.
+ */
+
 import tetris.connections.DatabaseConnectie;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
+
 
 public class RankingDialog extends JDialog implements ActionListener {
     JButton jbTerug;

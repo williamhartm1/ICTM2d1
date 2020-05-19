@@ -1,5 +1,9 @@
 package tetris.gui;
 
+/*
+panel voor de Gui van het spel en de statistieken
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,7 +18,7 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics graphics){
         Graphics2D g = (Graphics2D ) graphics;
         super.paintComponent(g);
-        gui.draw(g);
+        gui.draw(g);    //teken de blokjes en het bord in de GUI
     }
 
 }
