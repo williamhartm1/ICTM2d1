@@ -135,6 +135,7 @@ public class Board {
     }
 
     public void clearLine() {
+        System.out.println("ik ben de clearline functie");
         BoardCell[][] newBoard = createEmptyBoard();
         try {
             int y;
