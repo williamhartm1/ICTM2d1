@@ -9,6 +9,9 @@ public class TetrisMain {
         DatabaseConnectie.maakspeler("Heleen");
         Thread tetrisThread = new Thread(tetris, "tetris Thread");
 
+        int[] hoi = new int[3];
+        System.out.println(hoi[1]);
+
         tetrisThread.start();
     }
 }

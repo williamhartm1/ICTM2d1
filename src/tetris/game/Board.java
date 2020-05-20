@@ -168,19 +168,32 @@ public class Board {
         return completedLines;
     }
 
+    //board[x][y]
+    //i is een completedline
+    //y is de huidige lijn
+
     public void fillNewBoard(){
         BoardCell[][] newBoard = createEmptyBoard();
         int[] completedLines = collectCompletedLines();
-        int currentYnewBoard = 0;
+        int length = 0;
+        for(int i : completedLines){
+            if(i != 0){
+             length++;
+            }
+        }
+        int currentYnewBoard = length;
 
         for(int y = 0; y < HEIGHT; y++){
             for (int i : completedLines) {
                 if (i != y) {
-                    newBoard[][]
+                    for (int x = 0; x < WIDTH; x++) {
+                        newBoard[x][currentYnewBoard] = board[x][y];
+                        currentYnewBoard++;
+                    }
                 }
             }
         }
-
+    board = newBoard;
     }
 
 
@@ -233,5 +246,4 @@ public class Board {
 //            System.out.println(ne.toString());
 //            }
         }
-    }
     }
