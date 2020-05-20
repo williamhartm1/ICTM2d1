@@ -159,12 +159,13 @@ public class Board {
     public int[] collectCompletedLines(){
         int[] completedLines = new int[4];
         int aantal = 0;
-        for (int y =0; y < HEIGHT; y++){
+        for (int y = 0; y < HEIGHT; y++){
             if (isLineCompleted(y)){
                 completedLines[aantal] = y;
                 aantal++;
             }
         }
+       
         return completedLines;
     }
 
@@ -176,24 +177,35 @@ public class Board {
         BoardCell[][] newBoard = createEmptyBoard();
         int[] completedLines = collectCompletedLines();
         int length = 0;
+        boolean clearedLine;
         for(int i : completedLines){
             if(i != 0){
              length++;
             }
         }
-        int currentYnewBoard = length;
 
-        for(int y = 0; y < HEIGHT; y++){
-            for (int i : completedLines) {
-                if (i != y) {
-                    for (int x = 0; x < WIDTH; x++) {
-                        newBoard[x][currentYnewBoard] = board[x][y];
-                        currentYnewBoard++;
+        if(length != 0) {
+            int currentYnewBoard = length;
+
+            for (int y = 0; y < HEIGHT; y++) {
+                clearedLine = false;
+                for (int i : completedLines) {
+                    if (i == y) {
+                        clearedLine = true;
+                        System.out.println("clearedline is true");
+                    } else {
+                        for (int x = 0; x < WIDTH; x++) {
+                            newBoard[x][currentYnewBoard] = board[x][y];
+                            System.out.println(x + " " + currentYnewBoard + " " + y);
+                        }
                     }
                 }
+                if (!clearedLine) {
+                    currentYnewBoard++;
+                }
             }
+            board = newBoard;
         }
-    board = newBoard;
     }
 
 
