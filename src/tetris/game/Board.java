@@ -133,6 +133,7 @@ public class Board {
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
+    
 
     // Controleren of lijn vol is: isLineCompleted
     // Complete lijnen verzamelen: collectCompletedLines (return array[])
@@ -232,4 +233,5 @@ public class Board {
 //            System.out.println(ne.toString());
 //            }
         }
+    }
     }
