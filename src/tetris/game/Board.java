@@ -190,10 +190,6 @@ public class Board {
                     for (int x = 0; x < WIDTH; x++) {
                         System.out.println(y);
                         newBoard[x][currentYnewBoard] = board[x][y];
-                        if(currentYnewBoard == 18){
-                            currentYnewBoard++;
-                            newBoard[x][currentYnewBoard] = board[x][y];
-                        }
                         }
                     }
             }
