@@ -1,6 +1,7 @@
 package tetris.game;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Board {
     private static final int DROP_X = 5;
@@ -156,13 +157,13 @@ public class Board {
         return true;
     }
 
-    public int[] collectCompletedLines(){
-        int[] completedLines = new int[4];
-        int aantal = 0;
+    public ArrayList<Integer> collectCompletedLines(){
+        ArrayList<Integer> completedLines = new ArrayList<>();
+        //int aantal = 0;
         for (int y =0; y < HEIGHT; y++){
             if (isLineCompleted(y)){
-                completedLines[aantal] = y;
-                aantal++;
+                completedLines.add(y);
+                //aantal++;
             }
         }
         return completedLines;
@@ -174,23 +175,29 @@ public class Board {
 
     public void fillNewBoard(){
         BoardCell[][] newBoard = createEmptyBoard();
-        int[] completedLines = collectCompletedLines();
-        int length = 0;
-        for(int i : completedLines){
-            if(i != 0){
-             length++;
-            }
-        }
-        int currentYnewBoard = length;
-
+        ArrayList<Integer> completedLines = collectCompletedLines();
+        int currentYnewBoard = completedLines.size();
+        boolean clearedline;
         for(int y = 0; y < HEIGHT; y++){
+            System.out.println(currentYnewBoard);
+            clearedline = false;
             for (int i : completedLines) {
-                if (i != y) {
-                    for (int x = 0; x < WIDTH; x++) {
-                        newBoard[x][currentYnewBoard] = board[x][y];
-                        currentYnewBoard++;
-                    }
+                if (i == y) {
+                    clearedline = true;
                 }
+                else{
+                    for (int x = 0; x < WIDTH; x++) {
+                        System.out.println(y);
+                        newBoard[x][currentYnewBoard] = board[x][y];
+                        if(currentYnewBoard == 18){
+                            currentYnewBoard++;
+                            newBoard[x][currentYnewBoard] = board[x][y];
+                        }
+                        }
+                    }
+            }
+            if(!clearedline){
+                currentYnewBoard++;
             }
         }
     board = newBoard;

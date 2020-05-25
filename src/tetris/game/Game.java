@@ -90,6 +90,7 @@ public class Game {
         board.moveRight();
     }
 
-    public void clearLine(){board.clearLine();}
+    public void clearLine(){board.fillNewBoard();}
+
 
 }
