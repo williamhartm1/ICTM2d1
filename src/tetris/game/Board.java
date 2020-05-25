@@ -166,6 +166,7 @@ public class Board {
                 //aantal++;
             }
         }
+       
         return completedLines;
     }
 
@@ -200,7 +201,6 @@ public class Board {
                 currentYnewBoard++;
             }
         }
-    board = newBoard;
     }
 
 
