@@ -34,7 +34,7 @@ public class Tetris extends Canvas implements Runnable {
 
     private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
-    //private SpriteSheetLoader sprites;
+    private SpriteSheetLoader sprites;
 
     JFrame container;
 
@@ -45,8 +45,7 @@ public class Tetris extends Canvas implements Runnable {
         gui = new Gui(game);
 
         addKeyListener(keyboard);
-
-        //sprites = new SpriteSheetLoader(20, 20,  6);
+        sprites = new SpriteSheetLoader(20, 20,  6);
     }
 
     // gameLoop blijft status game checken
@@ -181,7 +180,10 @@ public class Tetris extends Canvas implements Runnable {
             game.drop();
         }
 
-        //controleren of een hele rij vol is, om deze leeg te maken
-        game.board.fillNewBoard();
+        //bord controleren op volle rijen, en zo nodig deze weghalen
+        int addedScore = game.board.fillNewBoard();
+        if (addedScore != 0){ //score bijtellen als line vol is
+            game.score += addedScore;
+        }
     }
 }

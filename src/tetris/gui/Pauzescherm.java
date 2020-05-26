@@ -29,10 +29,12 @@ public class Pauzescherm extends JDialog implements ActionListener {
         add(jlScore);
 
         jbContinue = new JButton("Verder gaan");
+        jbContinue.setBackground(Color.GREEN);
         add(jbContinue);
         jbContinue.addActionListener(this);
 
         jbQuit = new JButton("Terug naar hoofdmenu");
+        jbQuit.setBackground(Color.RED);
         add(jbQuit);
         jbQuit.addActionListener(this);
 

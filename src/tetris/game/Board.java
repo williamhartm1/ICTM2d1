@@ -159,14 +159,9 @@ public class Board {
         return completedLines;
     }
 
-    //board[x][y]
-    //i is een completedline
-    //y is de huidige lijn
-
 
     // Nieuw bord vullen: fillNewBoard
-
-    public void fillNewBoard(){
+    public int fillNewBoard(){
         BoardCell[][] newBoard = createEmptyBoard();     //   initialiseer nieuw bord
         ArrayList<Integer> completedLines = collectCompletedLines();     //   aanroepen collectCompletedLines
         boolean compleet;
@@ -190,6 +185,8 @@ public class Board {
                 //  als compleet: negeren
             }
             board = newBoard;
+            return completedLines.size() * 50;
         }
+        return 0;
     }
 }
