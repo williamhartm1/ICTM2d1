@@ -1,6 +1,7 @@
 package tetris.game;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Board {
     private static final int DROP_X = 5;
@@ -134,27 +135,58 @@ public class Board {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
-    public void clearLine(){    //lijn blokjes weghalen als hele rij vol zit.
-        try {
-            int x;
-            for (x = 0; HEIGHT > x; x++) {
-                boolean clearable = true;
-                for (int y = 0; WIDTH > y; y++) {
-                    if (board[y][x] == null) {
-                        clearable = false;
-                    }
-                }
-                if (clearable) {
-                    for (int i = 0; WIDTH > i; i++) {
-                        board[i][x] = null;
-                    }
 
-                }
+
+    // Controleren of lijn vol is
+    public boolean isLineCompleted(int line){
+        for(int x = 0; x < WIDTH; x++){
+            if(board[x][line].isEmpty()){
+                return false;
             }
-        } catch(Exception e){
-            System.out.println(e.toString());
-            System.out.println("");
-            e.printStackTrace();
         }
+        return true;
+    }
+
+    // Complete lijnen verzamelen
+    public ArrayList<Integer> collectCompletedLines(){
+        ArrayList<Integer> completedLines = new ArrayList<>();
+        for (int y =0; y < HEIGHT; y++){
+            if (isLineCompleted(y)){
+                completedLines.add(y);
+            }
+        }
+
+        return completedLines;
+    }
+
+
+    // Nieuw bord vullen: fillNewBoard
+    public int fillNewBoard(){
+        BoardCell[][] newBoard = createEmptyBoard();     //   initialiseer nieuw bord
+        ArrayList<Integer> completedLines = collectCompletedLines();     //   aanroepen collectCompletedLines
+        boolean compleet;
+        int currentYnewBoard = 0;     //   huidige y nieuw bord initialiseren: currentYnewBoard
+
+
+        if (completedLines.size() != 0) {
+            for (int y = 0; y < HEIGHT; y++) {     //   loop door y van het oude bord
+                compleet = false;
+                for (int i : completedLines) {     //      controleren of y in collectCompletedLines
+                    if (i == y) {
+                        compleet = true;
+                    }
+                }
+                if (!compleet) { //  als niet compleet: overnemen in nieuw bord
+                    for (int x = 0; x < WIDTH; x++) {
+                        newBoard[x][currentYnewBoard] = board[x][y];
+                    }
+                    currentYnewBoard++;
+                }
+                //  als compleet: negeren
+            }
+            board = newBoard;
+            return completedLines.size() * 50;
+        }
+        return 0;
     }
 }

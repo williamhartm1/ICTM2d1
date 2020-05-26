@@ -10,7 +10,7 @@ Score bijhouden;
 public class Game {
     protected Board board;
 
-    private int score = 0;
+    public int score = 0;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;

@@ -62,7 +62,6 @@ void checkLdr() {
   int ldrValue = analogRead(LDR);
 
   if (ldrValue < 150) {
-    ldrValue = analogRead(LDR);
     Serial.println("Pause");
   }
 }
@@ -109,7 +108,7 @@ void checkStateGame() {
         delay(delayOne);
         noTone(BUZZER);
         delay(delayOne);
-}
+      }
     }
   }
 }

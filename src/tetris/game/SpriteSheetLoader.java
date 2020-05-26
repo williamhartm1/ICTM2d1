@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class SpriteSheetLoader {
-/*
+
     BufferedImage spriteSheet;
 
 
@@ -34,7 +34,7 @@ public class SpriteSheetLoader {
         return sprites[column];
     }
 
- */
+
 
 
 }

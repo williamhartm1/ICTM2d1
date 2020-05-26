@@ -10,6 +10,7 @@ import tetris.game.Game;
 import tetris.game.SpriteSheetLoader;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class Gui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        sprites = new SpriteSheetLoader(20, 20,  6);
+
         //scherm met bord en blokjes
         gamescherm = new GamePanel(this);
         add(gamescherm, BorderLayout.WEST); //links plaatsen
@@ -42,17 +45,30 @@ public class Gui extends JFrame {
         statistieken = new JPanel();
         add(statistieken, BorderLayout.CENTER); //midden naast de andere panel
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
-        statistieken.setBackground(Color.lightGray);
-
-        //sprites = new SpriteSheetLoader(20, 20,  6);
+        statistieken.setBackground(new Color(38, 115, 191));
 
         jlNaam = new JLabel("");
+        jlNaam.setForeground(Color.white);
+        jlNaam.setBorder(new EmptyBorder(25, 20, 0, 0));
         statistieken.add(jlNaam);
 
+
         jlScore = new JLabel("");
+        jlScore.setForeground(Color.white);
+        jlScore.setBorder(new EmptyBorder(0, 20, 0, 0));
         statistieken.add(jlScore);
 
-        statistieken.add(new JLabel("PAUZE: DEK LDR AF"));
+        JLabel jlPauze = new JLabel("PAUZE: DEK LDR AF");
+        jlPauze.setForeground(Color.white);
+        jlPauze.setBorder(new EmptyBorder(50, 20, 0, 0));
+        statistieken.add(jlPauze);
+
+        JLabel jlTrademark = new JLabel("© ICTM2D groep 1");
+        jlTrademark.setBorder(new EmptyBorder(250, 50,0,0));
+        jlTrademark.setForeground(Color.lightGray);
+        jlTrademark.setFont(new Font("serif", Font.ITALIC, 12));
+        statistieken.add(jlTrademark);
+
 
         setResizable(false);
     }
@@ -83,7 +99,7 @@ public class Gui extends JFrame {
                 if(cell.isEmpty()) {
                     drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, Color.BLACK);
                 } else {
-                    //drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
+                    drawBlock(g, CORNER + i * 20, CORNER + (19 - j) * 20, getBlockSprite(cell.getBlockType()));
                 }
             }
         }
@@ -106,7 +122,7 @@ public class Gui extends JFrame {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, x, y, null);
     }
-/*
+
 
     //sprites per blokje tekenen
     private BufferedImage getBlockSprite(BlockType blockType) {
@@ -125,8 +141,6 @@ public class Gui extends JFrame {
                 return sprites.getSprite(5);
         }
     }
-
- */
 
 
 }

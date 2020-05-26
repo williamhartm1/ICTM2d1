@@ -13,7 +13,7 @@ import tetris.game.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +32,7 @@ public class Startscherm extends JFrame implements ActionListener {
 
     public Startscherm(Game game) throws IOException {
         this.game = game;
-        setSize(420, 450);
+        setSize(420, 350);
         setLayout(new BorderLayout());
         setTitle("Tetris hoofdmenu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +40,7 @@ public class Startscherm extends JFrame implements ActionListener {
 
         //componenten initialiseren
         melding = new JLabel("");
+        melding.setForeground(new Color(255, 72, 72));
         jlNaam = new JLabel("Naam:");
         jtNaam = new JTextField(15);
 
@@ -63,17 +64,18 @@ public class Startscherm extends JFrame implements ActionListener {
         jbStart.setPreferredSize(new Dimension(400, 50));
         jbStart.setBackground(Color.green);
 
-
-        //bovenste panel voor een logo
+        //bovenste panel voor een naam spel
         JPanel logoPanel = new JPanel();
-        BufferedImage logo = ImageIO.read(new File("C:\\Users\\leens\\Documents\\ICT\\Periode_4\\KBS\\Code_git\\ICTM2d1\\src\\tetris\\sprites\\Logo.png"));
-        JLabel iconLabel = new JLabel(new ImageIcon(logo));
-        logoPanel.add(iconLabel);
+        JLabel jlTetris = new JLabel("TETRIS");
+        jlTetris.setFont(new Font("Serif", Font.BOLD, 65));
+        jlTetris.setForeground(new Color(255, 67, 46));
+        logoPanel.add(jlTetris);
         add(logoPanel, BorderLayout.PAGE_START);
 
 
         //linker panel voor invoeren van naam
         JPanel leftPanel = new JPanel(new GridBagLayout());
+        leftPanel.setBorder(new EmptyBorder(0, 0, 15, 0));
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5,5,5,5);
         c.gridx = 0;
@@ -88,6 +90,7 @@ public class Startscherm extends JFrame implements ActionListener {
 
         //midden van het scherm: moeilijkheid kiezen
         JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setBorder(new EmptyBorder(0, 0, 15, 0));
         c = new GridBagConstraints();
         c.insets = new Insets(5,5,5,5);
         c.gridx  = 0;
@@ -99,9 +102,9 @@ public class Startscherm extends JFrame implements ActionListener {
         centerPanel.add(jrHard, c);
         add(centerPanel, BorderLayout.CENTER);
 
-
         //rechter kant van het scherm: ranking knop
         JPanel rightPanel = new JPanel(new GridBagLayout());
+        rightPanel.setBorder(new EmptyBorder(0, 0, 15, 0));
         c = new GridBagConstraints();
         c.insets = new Insets(5,5,5,5);
         rightPanel.add(jbRank, c);
@@ -110,7 +113,6 @@ public class Startscherm extends JFrame implements ActionListener {
         //onderkant van het scherm: startknop
         add(jbStart, BorderLayout.PAGE_END);
 
-        pack();
     }
 
     @Override

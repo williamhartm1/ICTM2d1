@@ -5,6 +5,7 @@ Toont huidige score, knoppen voor doorgaan met spel of spel afsluiten.
  */
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ public class Pauzescherm extends JDialog implements ActionListener {
     private JButton jbContinue, jbQuit;
     boolean quit = false;
 
-    public Pauzescherm(Frame frame, Game game){
+    public Pauzescherm(Frame frame, Game game, String naam){
         super(frame, true);
         setSize(200, 200);
         setLocationRelativeTo(null);
@@ -23,16 +24,24 @@ public class Pauzescherm extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         JLabel jlText = new JLabel("Spel is gepauzeerd");
+        jlText.setFont(new Font("Sans-Serif", Font.ITALIC, 12));
+        jlText.setBorder(new EmptyBorder(5, 30, 5, 30));
         add(jlText);
 
-        JLabel jlScore = new JLabel("Huidige score is: " + game.getScore()); //toont huidige score voor pauzeren
+        JLabel jlNaam = new JLabel("Speler: " + naam);
+        add(jlNaam);
+
+        JLabel jlScore = new JLabel("Huidige score: " + game.getScore()); //toont huidige score voor pauzeren
+        jlScore.setBorder(new EmptyBorder(0, 30, 15, 30));
         add(jlScore);
 
         jbContinue = new JButton("Verder gaan");
+        jbContinue.setBackground(Color.GREEN);
         add(jbContinue);
         jbContinue.addActionListener(this);
 
         jbQuit = new JButton("Terug naar hoofdmenu");
+        jbQuit.setBackground(Color.RED);
         add(jbQuit);
         jbQuit.addActionListener(this);
 
@@ -43,8 +52,11 @@ public class Pauzescherm extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == jbQuit){
-            quit = true;
-            dispose();
+            int bevestiging = JOptionPane.showConfirmDialog(this, "Weet u het zeker? De score wordt niet opgeslagen als nu terug naar het hoofdmenu gaat.", "", JOptionPane.YES_NO_OPTION);
+            if (bevestiging == JOptionPane.YES_OPTION){
+                quit = true;
+                dispose();
+            }
         } else if (actionEvent.getSource() == jbContinue){
             dispose();
         }

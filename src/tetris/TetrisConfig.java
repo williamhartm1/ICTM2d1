@@ -9,7 +9,7 @@ import java.util.Properties;
 public class TetrisConfig {
     private Properties config = new Properties();
     public TetrisConfig() {
-        String fileName = "src/app.config";
+        String fileName = "ICTM2d1/src/app.config";
         InputStream is = null;
         try {
             is = new FileInputStream(fileName);
