@@ -116,7 +116,7 @@ public class DatabaseConnectie {
             rs = stmt.executeQuery("SELECT naam,highscore from speler");
             while (rs.next()) {
                 if (i < 5) {
-                    String gegevens = "Naam: " + rs.getString(1) + " highscore: " + rs.getString(2);
+                    String gegevens = rs.getString(1) + "   " + rs.getString(2);
                     highscore[i] = gegevens;
                 }
                 i++;

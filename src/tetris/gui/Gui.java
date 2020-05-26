@@ -42,7 +42,7 @@ public class Gui extends JFrame {
         statistieken = new JPanel();
         add(statistieken, BorderLayout.CENTER); //midden naast de andere panel
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
-        statistieken.setBackground(Color.lightGray);
+        statistieken.setBackground(new Color(38, 115, 191));
 
         //sprites = new SpriteSheetLoader(20, 20,  6);
 

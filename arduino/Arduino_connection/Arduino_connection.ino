@@ -14,6 +14,7 @@ void setup() {
   pinMode(LEFTBUTTON, INPUT);
   pinMode(RIGHTBUTTON, INPUT);
   pinMode(POTMETER, INPUT);
+  pinMode(LDR, INPUT);
   pinMode(BUZZER, OUTPUT);
 }
 
@@ -49,20 +50,18 @@ void checkPotmeter(){
   
   if (potmeterCurrValue > potmeterPrevValue){
     Serial.println("Rotate right");
-    delay(interval);
   } else if (potmeterCurrValue < potmeterPrevValue){
     Serial.println("Rotate left");
-    delay(interval);
   }
-
+  
+  delay(interval);
   potmeterPrevValue = potmeterCurrValue;
 }
 
 void checkLdr() {
   int ldrValue = analogRead(LDR);
 
-  while (ldrValue < 150) {
-    ldrValue = analogRead(LDR);
+  if (ldrValue < 150) {
     Serial.println("Pause");
   }
 }
@@ -71,9 +70,7 @@ void checkBothButtons() {
   int leftState = digitalRead(LEFTBUTTON);
   int rightState = digitalRead(RIGHTBUTTON);
 
-  while (leftState == 1 && rightState == 1 && millis() - previous_time > interval) {
-    leftState = digitalRead(LEFTBUTTON);
-    rightState = digitalRead(RIGHTBUTTON);
+  if (leftState == 1 && rightState == 1 && millis() - previous_time > interval) {
     Serial.println("Both pressed");
     previous_time = millis();
   }
@@ -111,7 +108,7 @@ void checkStateGame() {
         delay(delayOne);
         noTone(BUZZER);
         delay(delayOne);
-}
+      }
     }
   }
 }
