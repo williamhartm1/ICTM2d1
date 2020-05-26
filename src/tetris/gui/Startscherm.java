@@ -61,7 +61,7 @@ public class Startscherm extends JFrame implements ActionListener {
         jbStart.setPreferredSize(new Dimension(400, 50));
         jbStart.setBackground(Color.green);
 
-        //bovenste panel voor een logo
+        //bovenste panel voor een naam spel
         JPanel logoPanel = new JPanel();
         JLabel jlTetris = new JLabel("TETRIS");
         jlTetris.setFont(new Font("Serif", Font.BOLD, 65));

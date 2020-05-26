@@ -113,7 +113,7 @@ public class DatabaseConnectie {
             int i = 0;
             Statement stmt = con.createStatement();
             ResultSet rs;
-            rs = stmt.executeQuery("SELECT naam,highscore from speler");
+            rs = stmt.executeQuery("SELECT naam,highscore from speler order by highscore DESC");
             while (rs.next()) {
                 if (i < 5) {
                     String gegevens = rs.getString(1) + "   " + rs.getString(2);

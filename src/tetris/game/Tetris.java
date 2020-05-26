@@ -60,7 +60,7 @@ public class Tetris extends Canvas implements Runnable {
 
             //als het spel is gepauzeerd (door LDR te bedekken)
             if (game.isPaused()) {
-                Pauzescherm pauze = new Pauzescherm(container, game); //toon pauzescherm
+                Pauzescherm pauze = new Pauzescherm(container, game, startscherm.getNaam()); //toon pauzescherm
                 if (pauze.getQuit()) { //als op terug is geklikt in het scherm
                     game.setPause(); //terug naar startscherm
                 } else {

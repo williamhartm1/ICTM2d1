@@ -6,6 +6,7 @@ knoppen voor terug naar hoofdmenu en opnieuw proberen
  */
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,18 +26,25 @@ public class GameOver extends JDialog implements ActionListener {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         JLabel jlText = new JLabel("Game over!");
+        jlText.setFont(new Font("sans-serif", Font.BOLD, 20));
+        jlText.setForeground(Color.RED);
+        jlText.setBorder(new EmptyBorder(5, 30, 5, 30));
         add(jlText);
 
         JLabel jlScore = new JLabel("Score: " + this.score);
+        jlScore.setBorder(new EmptyBorder(0, 30, 0, 30));
         add(jlScore);
 
-        add(new JLabel("Score opgeslagen"));
+        JLabel jlMelding = new JLabel("Score opgeslagen");
+        jlMelding.setFont(new Font("sans-serif", Font.ITALIC, 14));
+        jlMelding.setBorder(new EmptyBorder(0, 30, 30, 30));
+        add(jlMelding);
 
         JButton jbQuit = new JButton("Terug naar hoofdmenu");
+        jbQuit.setBorder(new EmptyBorder(10, 30, 10, 30));
+        jbQuit.setBackground(Color.RED);
         add(jbQuit);
         jbQuit.addActionListener(this);
-
-        //nog toevoegen: opnieuw proberen
 
         setVisible(true);
 
