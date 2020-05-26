@@ -182,6 +182,6 @@ public class Tetris extends Canvas implements Runnable {
         }
 
         //controleren of een hele rij vol is, om deze leeg te maken
-        game.board.clearLine();
+        game.board.fillNewBoard();
     }
 }
