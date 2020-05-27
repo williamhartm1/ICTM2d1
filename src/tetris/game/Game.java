@@ -11,6 +11,7 @@ public class Game {
     protected Board board;
 
     public int score = 0;
+    public int difficulty = 1;
 
     private boolean isPlaying = false;
     private boolean isDropping = false;
@@ -57,12 +58,16 @@ public class Game {
         return board.getBoardWithPiece();
     }
 
+    public void setDifficulty(int difficulty){
+        this.difficulty = difficulty;
+    }
+
     //vanzelf droppen van blokje
     public void moveDown() {
         if (!board.canCurrentPieceMoveDown()) { //als blok niet verder kan, nieuw blok genereren en score +10
             isDropping = false;
             board.setCurrentBlock(Block.getRandomBlock());
-            score += 10;
+            score += (10 * difficulty);
         } else {
             board.moveDown(); //anders gewoon nog n stap naar beneden droppen
         }

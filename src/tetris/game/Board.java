@@ -185,7 +185,7 @@ public class Board {
                 //  als compleet: negeren
             }
             board = newBoard;
-            return completedLines.size() * 50;
+            return completedLines.size();
         }
         return 0;
     }

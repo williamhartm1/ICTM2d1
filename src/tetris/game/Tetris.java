@@ -157,8 +157,10 @@ public class Tetris extends Canvas implements Runnable {
         //snelheid instellen easy/medium/hard
         double delay = game.getIterationDelay();
         if (startscherm.getIsMedium()){
+            game.setDifficulty(2);
             delay = delay * 0.75;
         } else if (startscherm.getIsHard()){
+            game.setDifficulty(3);
             delay = delay * 0.5;
         }
 
@@ -183,7 +185,8 @@ public class Tetris extends Canvas implements Runnable {
         //bord controleren op volle rijen, en zo nodig deze weghalen
         int addedScore = game.board.fillNewBoard();
         if (addedScore != 0){ //score bijtellen als line vol is
-            game.score += addedScore;
+            System.out.println(addedScore + " " + (40 + game.difficulty * 10));
+            game.score += addedScore * (40 + game.difficulty*10);
         }
     }
 }

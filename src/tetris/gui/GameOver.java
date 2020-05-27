@@ -43,8 +43,8 @@ public class GameOver extends JDialog implements ActionListener {
         JButton jbQuit = new JButton("Terug naar hoofdmenu");
         jbQuit.setBorder(new EmptyBorder(10, 30, 10, 30));
         jbQuit.setBackground(Color.RED);
-        add(jbQuit);
         jbQuit.addActionListener(this);
+        add(jbQuit);
 
         setVisible(true);
 

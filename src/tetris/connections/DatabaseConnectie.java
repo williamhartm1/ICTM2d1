@@ -73,8 +73,9 @@ public class DatabaseConnectie {
             con = maakconnectie();
             Statement stmt = con.createStatement();
             ResultSet result = stmt.executeQuery("SELECT SpelerID FROM `speler` WHERE naam = \"" + naam + "\"");
-            result.next();
-            spelerID = result.getInt(1);
+            while (result.next()) {
+                spelerID = result.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
