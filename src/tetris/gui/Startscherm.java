@@ -3,22 +3,19 @@ package tetris.gui;
 /*
 Startscherm van de game.
 Optie voor kiezen moeilijkheid, standaard 'easy';
-Textveld voor naam, moet worden ingevuld;
+invoer van spelersnaam, verplicht veld;
 Ranking knop om de highscores in een apart scherm te tonen;
-Start knop, naam moet worden ingevuld, met geluid over Arduino als deze is aangeklikt;
+Start knop met geluid over Arduino als deze is aangeklikt;
  */
 
 import tetris.connections.ConnectieArduino;
 import tetris.game.Game;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class Startscherm extends JFrame implements ActionListener {
@@ -55,7 +52,7 @@ public class Startscherm extends JFrame implements ActionListener {
         group.add(jrMedium);
         group.add(jrHard);
 
-        jbRank = new JButton("Ranking");
+        jbRank = new JButton("Ranglijst");
         jbRank.addActionListener(this);
         jbRank.setBackground(Color.orange);
 
@@ -64,7 +61,7 @@ public class Startscherm extends JFrame implements ActionListener {
         jbStart.setPreferredSize(new Dimension(400, 50));
         jbStart.setBackground(Color.green);
 
-        //bovenste panel voor een naam spel
+        //bovenste panel voor naam vh spel
         JPanel logoPanel = new JPanel();
         JLabel jlTetris = new JLabel("TETRIS");
         jlTetris.setFont(new Font("Serif", Font.BOLD, 65));
@@ -118,10 +115,9 @@ public class Startscherm extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbStart){
-            if (jtNaam.getText().equals("")){
-                melding.setText("Naam moet worden ingevuld");      //melding als naam niet is ingevuld
-
-            } else { //spel starten in game
+            if (jtNaam.getText().equals("")){ //melding als naam niet is ingevuld
+                melding.setText("Naam moet worden ingevuld");
+            } else { //spel starten, status in game.java omzetten naar isPlaying
                 game.startGame();
 
                 //communicatie naar Arduino voor geluid
@@ -136,18 +132,18 @@ public class Startscherm extends JFrame implements ActionListener {
                     iOE.printStackTrace();
                 }
 
-                melding.setText("");
+                melding.setText(""); //melding weghalen
                 dispose(); //dit scherm weghalen
             }
 
-        } else if (e.getSource() == jbRank){
+        } else if (e.getSource() == jbRank){ //ranglijst dialoog openen
             RankingDialog ranking = new RankingDialog(this);
             ranking.setVisible(true);
-        } else if (e.getSource() == jrEasy) {
+        } else if (e.getSource() == jrEasy) { //moeilijkheid op easy
             isEasy = true;
-        } else if (e.getSource() == jrMedium) {
+        } else if (e.getSource() == jrMedium) { //moeilijkheid op medium
             isMedium = true;
-        } else if (e.getSource() == jrHard) {
+        } else if (e.getSource() == jrHard) { //moeilijkheid op hard
             isHard = true;
         }
     }
@@ -156,6 +152,7 @@ public class Startscherm extends JFrame implements ActionListener {
         return jtNaam.getText();
     }
 
+    //alleen medium en hard omdat easy de standaard is
     public boolean getIsMedium() {
         return isMedium;
     }

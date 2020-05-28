@@ -11,12 +11,12 @@ public class ConnectieArduino {
 
     public ConnectieArduino() {
         SerialPort availablePort;
-        availablePort = SerialPort.getCommPort("COM3"); //set Arduino (COM3) als port
+        availablePort = SerialPort.getCommPort("COM3"); //Arduino (COM3)  gebruiken als port
         if (!(availablePort == null)){
             usedPort = availablePort;
             usedPort.openPort();        //open deze port
 
-            if (usedPort.isOpen()) {
+            if (usedPort.isOpen()) { //print status van verbinding
                 System.out.println("Opened COM3 (Arduino)");
             } else {
                 System.out.println("Port is not available");

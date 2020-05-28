@@ -1,5 +1,9 @@
 package tetris;
 
+/*
+Configuratie van de locatie van de sprites, zodat ie per persoon naar de juiste bestandslocatie wijst
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

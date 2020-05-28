@@ -1,13 +1,13 @@
 package tetris.gui;
 
 /*
-Laat de top 5 highscores zien. Terugknop naar hoofdmenu.
+Laat de top 5 highscores zien, opgehaald uit de database via databaseconnectie.java.
+Terugknop naar hoofdmenu;
  */
 
 import tetris.connections.DatabaseConnectie;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,18 +34,18 @@ public class RankingDialog extends JDialog implements ActionListener {
         topscores.setLayout(new BoxLayout(topscores, BoxLayout.Y_AXIS));
 
         JLabel jlText = new JLabel("Highscores");
+            //opmaak van de tekst
             Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
             fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
             jlText.setFont(new Font("sans-serif", Font.BOLD, 20).deriveFont(fontAttributes));
         jlText.setBorder(new EmptyBorder(0,0, 15,0));
         jlText.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         topscores.add(jlText);
 
         String[] highscores;
-        highscores = DatabaseConnectie.getHighscores();
+        highscores = DatabaseConnectie.getHighscores(); //highscores uit database ophalen
         for(int i = 0;i < 5; i++){
-            if (highscores[i] != null) {
+            if (highscores[i] != null) { //alle highscores doorlopen en als JLabel tonen
                 jlScore = new JLabel(i + 1 + "    " + highscores[i]);
                 jlScore.setAlignmentX(Component.CENTER_ALIGNMENT);
                 topscores.add(jlScore);
@@ -63,6 +63,6 @@ public class RankingDialog extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        dispose();
+        dispose(); //dit scherm wegdoen als op de terugknop is gedrukt
     }
 }

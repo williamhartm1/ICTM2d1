@@ -1,5 +1,10 @@
 package tetris.game;
 
+/*
+Blok maken met een willekeurig bloktype;
+Roteren van blok;
+ */
+
 import java.awt.*;
 
 public class Block {
@@ -38,6 +43,7 @@ public class Block {
     }
 
 
+    //blok linksom of rechtsom draaien afhankelijk van parameters
     private Point[] rotate(Point toRotate[], int x, int y) {
         Point rotated[] = new Point[4];
 

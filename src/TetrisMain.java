@@ -9,17 +9,16 @@ William Hartman  - s1150636
 Pascal Meijerman - S1143521
  */
 
-import tetris.TetrisConfig;
 import tetris.game.Tetris;
 
 import java.io.IOException;
 
 public class TetrisMain {
     public static void main(String[] args) throws IOException {
+        //Tetris thread starten en hier doorheen blijven loopen
         Tetris tetris = new Tetris();
         Thread tetrisThread = new Thread(tetris, "tetris Thread");
 
         tetrisThread.start();
-        //TetrisConfig test = new TetrisConfig();
     }
 }

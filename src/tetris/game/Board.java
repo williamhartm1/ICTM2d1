@@ -1,5 +1,11 @@
 package tetris.game;
 
+/*
+Het bord van het spel, met alle blokken op het bord.
+Bewegingen van het blok: vanzelf naar beneden vallen, draaien en bewegen.
+Controleerd op volle rijen, volle kolommen, wanneer blok moet stoppen met naar beneden vallen.
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -7,20 +13,23 @@ public class Board {
     private static final int DROP_X = 5;
     private static final int DROP_Y = 19;
 
+    //dimensies van het bord
     private static int WIDTH = 10;
     private static int HEIGHT = 20;
 
-    private BoardCell[][] board = new BoardCell[WIDTH][HEIGHT];
+    private BoardCell[][] board;
 
     private Point blockCenter = new Point(DROP_X, DROP_Y);
 
     private Block currentBlock;
 
 
+    //constructor: beginnen met een bord zonder blokken
     public Board() {    //nieuw leeg bord maken
         board = createEmptyBoard();
     }
 
+    //bord met een blok erop maken
     public BoardCell[][] getBoardWithPiece() {
         BoardCell[][] output = new BoardCell[WIDTH][HEIGHT];
 
@@ -38,6 +47,7 @@ public class Board {
         return output;
     }
 
+    //maak een bord aan zonder blokken
     private BoardCell[][] createEmptyBoard() {
         BoardCell[][] boardX = new BoardCell[WIDTH][HEIGHT];
 
@@ -47,6 +57,7 @@ public class Board {
         return boardX;
     }
 
+    //nieuw blok op het bord zetten
     public void setCurrentBlock(Block block) {
         if (currentBlock != null) {
             addPieceToBoard();
@@ -55,6 +66,7 @@ public class Board {
         resetPieceCenter();
     }
 
+    //nieuw blok aanmaken
     private void addPieceToBoard() {
         for (Point point : currentBlock.getPoints()) {
             int x = blockCenter.x + point.x;
@@ -63,34 +75,38 @@ public class Board {
         }
     }
 
+    //controleren of een blok nog een rij naar beneden kan
     public boolean canCurrentPieceMoveDown() {
         return fit(currentBlock.getPoints(), 0, -1);
     }
 
+    //blok naar links draaien
     public void rotateLeft() {
         Block rot = currentBlock.rotateLeft();
-        if (fit(rot.getPoints(), 0, 0)) {
+        if (fit(rot.getPoints(), 0, 0)) {  //controleren of dit past op huidige bord
             currentBlock = rot;
         }
     }
 
+    //blok naar rechts draaien als dit past
     public void rotateRight(){
         Block rot = currentBlock.rotateRight();
-        if (fit(rot.getPoints(), 0, 0)) {
+        if (fit(rot.getPoints(), 0, 0)) {  //controleren of dit past op huidige bord
             currentBlock = rot;
         }
     }
 
-    public boolean fit(Point[] points, int moveX, int moveY) { //check of blok nog naar links/rechts/beneden kan
-        for (Point point : points) {
+    //controleren of blok nog naar links/rechts/beneden kan
+    public boolean fit(Point[] points, int moveX, int moveY) {
+        for (Point point : points) { //coordinaten na mogelijke verplaatsing van blok ophalen
             int x = blockCenter.x + point.x + moveX;
             int y = blockCenter.y + point.y + moveY;
 
-            if (x < 0 || x >= WIDTH || y >= HEIGHT || y < 0) {
+            if (x < 0 || x >= WIDTH || y >= HEIGHT || y < 0) { //zijkanten controleren
                 return false;
             }
 
-            if (!board[x][y].isEmpty()) {
+            if (!board[x][y].isEmpty()) { //kijken of het vak nog leeg is
                 return false;
             }
         }
@@ -98,49 +114,53 @@ public class Board {
         return true;
     }
 
-    public boolean isAtTop(){   //check of blok bovenaan het bord niet meer naar beneden kan, oftewel game over is
-        Point[] points = currentBlock.getPoints();
-        for(Point point : points){
-            int y = blockCenter.y + point.y -1;
-            if ( y >= 18 && !canCurrentPieceMoveDown()){
-                return true;
-            }
-        }
-        return false;
-    }
-
+    //midden van het blok updaten als 't naar beneden beweegt
     private void resetPieceCenter() {
         blockCenter.x = DROP_X;
         blockCenter.y = DROP_Y;
     }
 
+    //blok naar beneden bewegen met coordinaten
     public void moveDown() {
         move(0, -1);
     }
 
+    //blok naar links bewegen met coordinaten
     public void moveLeft() {
-        if (fit(currentBlock.getPoints(), -1, 0)) {
+        if (fit(currentBlock.getPoints(), -1, 0)) { //controleren of dit past op huidige bord
             move( -1, 0);
         }
     }
 
+    //blok naar rechts bewegen met coordinaten
     public void moveRight() {
-        if (fit(currentBlock.getPoints(), 1, 0)) {
+        if (fit(currentBlock.getPoints(), 1, 0)) { //controleren of dit past op huidige bord
             move(1, 0);
         }
     }
 
-    // Helper to current block center X and Y
+    // coordinaten updaten na verplaatsing van het blok
     private void move(int moveX, int moveY) {
         blockCenter = new Point(blockCenter.x + moveX, blockCenter.y + moveY);
     }
 
+    //controleren of kolom vol is, ofwel of een blok bovenaan al niet meer naar beneden kan verplaatsen
+    public boolean isAtTop(){
+        Point[] points = currentBlock.getPoints(); //coordinaten huidige blok ophalen
+        for(Point point : points){
+            int y = blockCenter.y + point.y -1;
+            if ( y >= 18 && !canCurrentPieceMoveDown()){ // blok kan niet meer naar beneden, en is nog boven rij 18
+                return true; //game over
+            }
+        }
+        return false;
+    }
 
 
     // Controleren of lijn vol is
     public boolean isLineCompleted(int line){
-        for(int x = 0; x < WIDTH; x++){
-            if(board[x][line].isEmpty()){
+        for(int x = 0; x < WIDTH; x++){ //elke lijn doorlopen
+            if(board[x][line].isEmpty()){ //controleren of vakje leegg is
                 return false;
             }
         }
@@ -150,8 +170,8 @@ public class Board {
     // Complete lijnen verzamelen
     public ArrayList<Integer> collectCompletedLines(){
         ArrayList<Integer> completedLines = new ArrayList<>();
-        for (int y =0; y < HEIGHT; y++){
-            if (isLineCompleted(y)){
+        for (int y =0; y < HEIGHT; y++){ //elke rij doorlopen
+            if (isLineCompleted(y)){ //rij toevoegen als deze vol is
                 completedLines.add(y);
             }
         }

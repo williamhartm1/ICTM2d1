@@ -1,7 +1,7 @@
 package tetris.gui;
 /*
 Pauzescherm als het spel is gepauzeerd.
-Toont huidige score, knoppen voor doorgaan met spel of spel afsluiten.
+Toont huidige speler en score, knoppen voor doorgaan met spel of spel afsluiten.
  */
 
 import javax.swing.*;
@@ -31,7 +31,7 @@ public class Pauzescherm extends JDialog implements ActionListener {
         JLabel jlNaam = new JLabel("Speler: " + naam);
         add(jlNaam);
 
-        JLabel jlScore = new JLabel("Huidige score: " + game.getScore()); //toont huidige score voor pauzeren
+        JLabel jlScore = new JLabel("Huidige score: " + game.getScore()); //toont huidige score tijdens pauzeren
         jlScore.setBorder(new EmptyBorder(0, 30, 15, 30));
         add(jlScore);
 
@@ -52,13 +52,14 @@ public class Pauzescherm extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == jbQuit){
+            //bevestiging vragen voor teruggaan
             int bevestiging = JOptionPane.showConfirmDialog(this, "Weet u het zeker? De score wordt niet opgeslagen als nu terug naar het hoofdmenu gaat.", "", JOptionPane.YES_NO_OPTION);
-            if (bevestiging == JOptionPane.YES_OPTION){
-                quit = true;
+            if (bevestiging == JOptionPane.YES_OPTION){ //teruggaan is bevestigt
+                quit = true; //zorgt ervoor dat startscherm zichtbaar wordt
                 dispose();
             }
         } else if (actionEvent.getSource() == jbContinue){
-            dispose();
+            dispose(); //zorgt ervoor dat gameplay verder gaat
         }
     }
 

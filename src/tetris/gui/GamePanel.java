@@ -1,7 +1,8 @@
 package tetris.gui;
 
 /*
-panel voor de Gui van het spel en de statistieken
+Panel voor de Gui van het spel en de statistieken.
+geeft Graphics door aan Gui.
  */
 
 import javax.swing.*;

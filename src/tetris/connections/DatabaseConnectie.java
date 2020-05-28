@@ -2,12 +2,11 @@ package tetris.connections;
 
 /*
 Verbinding met de database wordt opgezet. Verschillende database functies worden hier geinitieerd.
-Maken van een connectie met de database;
-opslaan van een gespeeld spel;
-opslaan van een speler;
+maken van een connectie met de database;
+opslaan van een gespeeld spel met juiste spelerID;
 ophalen van spelerID dmv spelernaam;
+nieuwe speler toevoegen;
 ophalen top 5 highscores;
-printen van data;
  */
 
 import java.sql.*;
@@ -128,53 +127,4 @@ public class DatabaseConnectie {
         }
         return highscore;
     }
-
-/*
-/////niet in gebruik//////
-
-    //resultaten printen
-    public static void printData(ResultSet res){
-        if (res == null) {
-            System.out.println("rs is null");
-        } else {
-            try {
-                ResultSetMetaData rsmd = res.getMetaData();
-                int columnummer = rsmd.getColumnCount();
-                System.out.println(columnummer);
-                while (res.next()) {
-                    for (int i = 1; i <= columnummer; i++) {
-                        if (i > 1) {
-                            System.out.print(",  ");
-                        }
-
-                        System.out.println(rsmd.getColumnName(i) + ": " + res.getString(i));
-                    }
-                    System.out.println("");
-                }
-            } catch (Exception e) {
-                System.out.println("er is iets fout gegaan bij het uitprinten van de gegevens " + e.toString());
-            }
-        }
-    }
-
-
-    //alle gegevens uit de database teruggeven
-    public static ResultSet getGegevens(int spelerID){
-        try {
-            con = maakconnectie();
-            Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM speler JOIN spel on spel.SpelerID = speler.SpelerID" +
-                    " WHERE speler.spelerID = " + spelerID + ";");
-            return res;
-        }catch (java.sql.SQLException ex){
-            System.out.println("er is iets mis met de query");
-            System.out.println(ex.toString());
-            return null;
-        }
-        catch(NullPointerException nul){
-            System.out.println(nul.toString());
-            return null;
-        }
-    }
-    */
 }

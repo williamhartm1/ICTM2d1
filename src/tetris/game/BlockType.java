@@ -1,5 +1,9 @@
 package tetris.game;
 
+/*
+Alle vormen die een blok kan aannemen bij tetris;
+ */
+
 import java.awt.*;
 import java.util.Random;
 

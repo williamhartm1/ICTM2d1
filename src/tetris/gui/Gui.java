@@ -1,7 +1,9 @@
 package tetris.gui;
 
 /*
-Panel dat het bord en de blokjes tekent, en de spelstatistieken ernaast toont
+frame met twee panels.
+Spel met bord en blokken wordt links op het scherm getoond;
+spelstatistieken naam, score, pauze instructie worden rechts op het scherm getoond;
  */
 
 import tetris.game.BlockType;
@@ -47,22 +49,26 @@ public class Gui extends JFrame {
         statistieken.setLayout(new BoxLayout(statistieken, BoxLayout.PAGE_AXIS));
         statistieken.setBackground(new Color(38, 115, 191));
 
+        //naam, wordt later ingevuld vanuit game.java
         jlNaam = new JLabel("");
         jlNaam.setForeground(Color.white);
         jlNaam.setBorder(new EmptyBorder(25, 20, 0, 0));
         statistieken.add(jlNaam);
 
 
+        //score, wordt telkens geupdatet en doorgegeven vanuit game
         jlScore = new JLabel("");
         jlScore.setForeground(Color.white);
         jlScore.setBorder(new EmptyBorder(0, 20, 0, 0));
         statistieken.add(jlScore);
 
+        //instructie voor pauzeknop
         JLabel jlPauze = new JLabel("PAUZE: DEK LDR AF");
         jlPauze.setForeground(Color.white);
         jlPauze.setBorder(new EmptyBorder(50, 20, 0, 0));
         statistieken.add(jlPauze);
 
+        //trademark voor de lol
         JLabel jlTrademark = new JLabel("© ICTM2D groep 1");
         jlTrademark.setBorder(new EmptyBorder(250, 50,0,0));
         jlTrademark.setForeground(Color.lightGray);
@@ -78,7 +84,7 @@ public class Gui extends JFrame {
         jlNaam.setText("SPELER: " + naam);
     }
 
-    //score aanpassen naar huidige score bijgehouden in board.java
+    //score aanpassen naar huidige score bijgehouden in game.java
     public void setScore(int score){    //score vanuit game instellen
         jlScore.setText("SCORE: " + score);
     }
@@ -89,7 +95,7 @@ public class Gui extends JFrame {
         drawCells(g);
     }
 
-
+    //tekenen van blokken op het bord
     public void drawCells(Graphics2D g) {
         BoardCell[][] cells = game.getBoardCells();
         for (int i = 0; i < 10; i++) {
@@ -105,6 +111,7 @@ public class Gui extends JFrame {
         }
     }
 
+    //achtergrond van het bord tekenen
     public void drawEmptyBoard(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 800, 500);
@@ -112,12 +119,14 @@ public class Gui extends JFrame {
         g.drawRect(CORNER - 1, CORNER - 1, 10 * BLOCK_WIDTH + 2, 20 * BLOCK_WIDTH + 2);
     }
 
+    //blok tekenen zonder sprites
     public void drawBlock(Graphics g, int x, int y, Color color) {
         g.setColor(color);
         g.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
         g.drawRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
     }
 
+    //blok tekenen met sprites
     public void drawBlock(Graphics g, int x, int y, BufferedImage sprite) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, x, y, null);

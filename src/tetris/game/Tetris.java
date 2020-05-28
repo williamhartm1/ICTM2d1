@@ -16,7 +16,7 @@ import tetris.gui.GameOver;
 import tetris.gui.Gui;
 import tetris.gui.Pauzescherm;
 import tetris.gui.Startscherm;
-import tetris.input.KeyboardInput;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,8 +30,6 @@ public class Tetris extends Canvas implements Runnable {
     private Gui gui;
     private long lastIteration = System.currentTimeMillis();
 
-    private final KeyboardInput keyboard = new KeyboardInput();
-
     private final ConnectieArduino connectieArduino = new ConnectieArduino();
 
     private SpriteSheetLoader sprites;
@@ -44,7 +42,6 @@ public class Tetris extends Canvas implements Runnable {
         startscherm = new Startscherm(game);
         gui = new Gui(game);
 
-        addKeyListener(keyboard);
         sprites = new SpriteSheetLoader(20, 20,  6);
     }
 
@@ -170,16 +167,6 @@ public class Tetris extends Canvas implements Runnable {
         } else if (System.currentTimeMillis() - lastIteration >= delay) {
             game.moveDown();
             lastIteration = System.currentTimeMillis();
-        }
-
-        if (keyboard.rotate()) {
-            game.board.rotateLeft();
-        } else if (keyboard.left()) {
-            game.board.moveLeft();
-        } else if (keyboard.right()) {
-            game.board.moveRight();
-        } else if (keyboard.drop()) {
-            game.drop();
         }
 
         //bord controleren op volle rijen, en zo nodig deze weghalen
